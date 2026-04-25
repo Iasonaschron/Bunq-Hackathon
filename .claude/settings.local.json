@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create *)",
+      "Bash(npm install *)",
+      "PowerShell(New-Item *)",
+      "Bash(pkill -f \"uvicorn server:app\")",
+      "Bash(python -m uvicorn server:app --reload)"
+    ]
+  }
+}
