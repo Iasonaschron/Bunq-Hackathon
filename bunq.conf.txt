@@ -1,0 +1,727 @@
+{
+    "api_key": "sandbox_5a56d3425766de239e6522273bb7590c315e4d9b40d428ab4db5aa59",
+    "environment_type": "SANDBOX",
+    "installation_context": {
+        "private_key_client": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDu2SSjSZY1gr3V\nvBv15TrGyPLRVJpGBx+Dyjx7xuKjYbKsEWwYy6ahj5BeJyV1XVha5l9JVY3+strT\nfkshSGfKQJ1vKfxybshV3lKv+04XKickNg8wd4EgQJMpvSzkWpK0AiacNVE5y15F\nJrLWK9iqCE9Z7F8095YV1GEYR7vV0t/Q3BdqRRxV39dsr/6owY5oBhp1ruF+yBfj\nHs4wcitR0RdSz0Gsnu4Bpksn/0Z72q9hmjG0J/c7pkmL9qyH6R/75azaFL/MzsVI\n0TjUTUvmWTEqQCShIECsnou4mqAXDBA1Ij6/jBhZ0ZoOroDgKlIh51WibVWJiGwA\nHRvCgde3AgMBAAECggEAJf1zzmUN90TsXOqmp93mE2gy9wi14R2Q7a1lIWro8YPA\nn43F28vInTnwhIlFc/186DhsP4XUKAbat3kHCiwyFgFhCSVseecVBlNuY39dVGHo\nB+JxWAwqBa8/uQvV8BxX6TnOWlpAqSinvegB2f7vX1wjAvKN0ibvQFmfd/Uw8zlg\no1N+MozBL0o9ugc7swYyN/+k5YQVdLq+FDapfn5fO+1z1nieW6uOrjaUyNedsjNs\nSiN/TU83hgC6cqk+2gHb+PlZq+tl+izTmzb/rQx37GwiChKrdgaT0hBhgdhwS6Ch\naRne/1yjdJtXWwqE8G/BcNK39TlbxxKjd9bXSsL8AQKBgQDy1gUwh/nKdxpEPnpb\nh8WyMGLrVfaYVPha3mfmJDGMwza78knZB6o66xJr93pc+miMgLUpz84+yZPtu0UZ\nYN+QJk9Fue+1CbtAK7YDsXW3lQFD+6dS8eCIxOLkcaCCGpdnKIX8YqKZt//wvn4g\nuKxmqFwWisfjxcH49A2kIcCewQKBgQD7y8ghFklDbbey51vO4tpU5ODBXfoHuAz3\nydqGFE+bW2feuAmDpt+enKMfcwOrxQEBvCj5VVteuit+5mk8oD3fVcBh40+hHvSI\nQZXuHHQLKPexsh2xcksReskfQ/twmZvUn3027/qEsSxVQ5Gg6qrdgt9Q+Pb0aBAQ\nKXliw0cMdwKBgHEAWP/hdsLZs7ZoIIYxYzTtQUrkANGYUM3wSwcUdp5bRUAmmmjN\nIVEzjKoDSsSzni0rw6IGWqJrKVRqXdhWdRJeUWtQABUNxz4wWQ3U6cOZKjKZi56U\ngfkDLdZCbf+9IhFWESuGNsYzkn1UF9tgNJG87MVspWH/56jS4Pos3rbBAoGAMFko\nzHGjD7d5lnimQEt+8N4h6f9Ji0Hj+5BezXAI+SPMBhAAg67/MU2SZO+IvOrPDq46\nj+W77ayBvZQwkNuUBdZJYoJrP9zZx3AQgfAkuB/dr9krqm7vyyNwivhax3w3V9Ro\nDqx1xhTfFmArDmMA/BetGbc0dCmnK/NKw5QLiHECgYEAuDWCnC8qlseQDLsKx99+\nm6Lkjc4D+snSG3YEE9UYlSmO0h2HjhcXnlp4bG8O2RlaZ4no/igube9kyJ25Nl0S\nptaySIcv5Q3L6N29oyQPKSgtZR0/DJQdaTREguu+1NLl755zCkHQIXGkqPnP+WID\nABHA67PGdjz+6wHCTGEvuWE=\n-----END PRIVATE KEY-----",
+        "public_key_client": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7tkko0mWNYK91bwb9eU6\nxsjy0VSaRgcfg8o8e8bio2GyrBFsGMumoY+QXicldV1YWuZfSVWN/rLa035LIUhn\nykCdbyn8cm7IVd5Sr/tOFyonJDYPMHeBIECTKb0s5FqStAImnDVROcteRSay1ivY\nqghPWexfNPeWFdRhGEe71dLf0NwXakUcVd/XbK/+qMGOaAYada7hfsgX4x7OMHIr\nUdEXUs9BrJ7uAaZLJ/9Ge9qvYZoxtCf3O6ZJi/ash+kf++Ws2hS/zM7FSNE41E1L\n5lkxKkAkoSBArJ6LuJqgFwwQNSI+v4wYWdGaDq6A4CpSIedVom1ViYhsAB0bwoHX\ntwIDAQAB\n-----END PUBLIC KEY-----",
+        "public_key_server": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtvfMPclCJO8OTzhtavyB\npuBJ+muHgxC245SRILORH6slw+KytBkVT4EykID/MrVHquWNWaiJ9HyUlxSMn11+\nAO+Li7HOk0D5QvZ0PMD7MTQLropykZgI4qQHefqSYBzvCv6Df6LCKsl4T3uBue4M\nS6wImD0UE3xkoRWZ3KoYyO7WCUMCAZyoj7j2QT+5ZTCi3Vx67+npakkfpTnVAzBT\nlWXZPLwsIn868gGvDr5haec57AJ1IyvlNtGV8UjFC2V1oc0aKVjYz8l0nDnkzFIt\ntNe/SJUnD2DzuvA+aai9vO7YNkUhzHCotrzXgxird2YXnihcGPWi2CveIUS3mCOp\nAQIDAQAB\n-----END PUBLIC KEY-----",
+        "token": "98f5ac4a632746076228b80d3f84ae34282eeb5c98cde02d441be900692345a7"
+    },
+    "session_context": {
+        "expiry_time": "2026-05-02 02:03:47.913158",
+        "token": "84fe28ab22d0bbc59da8390b0cbe17df2fa00cbfbe8e66bfab227a644f9315c7",
+        "user_id": 3628850,
+        "user_person": {
+            "address_main": {
+                "city": "Hurdegaryp",
+                "country": "NL",
+                "house_number": "455",
+                "is_user_address_updated": false,
+                "postal_code": "5066 YX",
+                "street": "Ashwell Lane"
+            },
+            "address_postal": {
+                "city": "Hurdegaryp",
+                "country": "NL",
+                "house_number": "455",
+                "is_user_address_updated": false,
+                "mailbox_name": "Laura Eireann-Beaufort",
+                "postal_code": "5066 YX",
+                "street": "Ashwell Lane"
+            },
+            "alias": [
+                {
+                    "name": "+31613375864",
+                    "type": "PHONE_NUMBER",
+                    "value": "+31613375864"
+                },
+                {
+                    "name": "test+610507ba-85d2-426b-a4f9-119f584c3524@bunq.com",
+                    "type": "EMAIL",
+                    "value": "test+610507ba-85d2-426b-a4f9-119f584c3524@bunq.com"
+                }
+            ],
+            "all_nationality": [
+                "NL"
+            ],
+            "avatar": {
+                "anchor_uuid": "e1d11e13-85be-415b-b7ed-970df840241e",
+                "image": [
+                    {
+                        "attachment_public_uuid": "4b7e0d1d-9167-48ac-990a-70e342c87812",
+                        "content_type": "image/jpeg",
+                        "height": 126,
+                        "width": 200
+                    }
+                ],
+                "style": "NONE",
+                "uuid": "9debf55b-70b1-4d43-8d51-d6e7bd42fb5b"
+            },
+            "country_of_birth": "NL",
+            "created": "2026-04-24 23:29:36.506992",
+            "daily_limit_without_confirmation_login": {
+                "currency": "EUR",
+                "value": "250.00"
+            },
+            "date_of_birth": "1999-02-03",
+            "display_name": "C. Elizabeth",
+            "first_name": "Catrice",
+            "gender": "FEMALE",
+            "id": 3628850,
+            "language": "en_US",
+            "last_name": "Elizabeth",
+            "legal_name": "Catrice Elizabeth",
+            "middle_name": "",
+            "nationality": "NL",
+            "notification_filters": [
+                {
+                    "category": "SUPPORT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SUPPORT_ANNOUNCEMENT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "INSTANT_PAYMENT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CARD_TRANSACTION_UPDATED",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SAVINGS_BUDGET_WARNING",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "DEBT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "DEBT_PREVENTION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "USER_VISITED_DEVICE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "PAYMENT_UPDATED",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "PAYMENT_DELAYED",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "PAYMENT_SUSPENDED",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "USER_SETTING_PAYMENT_SUSPENDED",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CREDIT_LINE_REPAYMENT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "USER_INFORMATION_INQUIRY",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "ASSISTANT_CONVERSATION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "FINN_CONVERSATION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SECURE_CODE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "IDIN",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "FREEZE_USER_PAYMENT_CLOSURE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SAVINGS_SMART_SAVE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "BADGE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "BANK_SWITCH_SERVICE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "BILLING",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CO_OWNER_INVITE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "PACK",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "INVITE_USER",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "MONETARY_ACCOUNT_JOINT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "MONETARY_ACCOUNT_PROFILE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SHARE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "TAX_IDENTIFICATION_NUMBER_WARNING",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "USER_APPROVAL",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "DIRECTOR",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "POPUP_NOTIFICATION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SUBSCRIPTION_TRIAL",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CARD",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CARD_EXPIRY",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CARD_TOKENIZATION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SELECT_USER",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "RISK_INFORMATION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "BARZAHLEN",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "USER_REVIEW",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "MONETARY_ACCOUNT_BALANCE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "RELATION_USER_REQUEST",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "FULFILLMENT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "USER_IMPERSONATION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SUBSCRIPTION_SWITCH",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "PAYMENT_INVESTIGATION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CARD_REPLACEMENT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "INCIDENT_USER_COMMUNICATION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CONTACT_PHONEBOOK_SIGNUP",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "GINMON_ACCOUNT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "GINMON_ACCOUNT_VALUATION_WEEKLY",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CARD_PERSONALIZATION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "KRAKEN_ASSET_ALERT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "KRAKEN_ACCOUNT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "GROCERY_PROMOTION_PARTICIPATION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SAVINGS_DEPOSIT_MILESTONE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CARD_COUNTRY_PERMISSION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CHAT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "MUTATION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "USE_RESPONSE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "USE_RESPONSE_NATIVE_COMMENT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "USE_RESPONSE_NATIVE_TOPIC",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SLICE_BADGE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SLICE_CHAT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SLICE_REGISTRY_ENTRY",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SLICE_REGISTRY_MEMBERSHIP",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SLICE_REGISTRY_SETTLEMENT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "FLARUM",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "PREMIUM_LIMITED",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "REMINDER_USER_IDENTIFICATION_VERIFICATION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "JOINT_MEMBERSHIP",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "OAUTH",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "USER_RECORDING",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "INSIGHT_SUBSCRIPTION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SAVINGS_AUTO_ROUTE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "TRAVEL_INSURANCE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "USER_MINOR_MATURITY",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SIM_VIRTUAL",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "COMPANY_EMPLOYEE_CARD",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SIM_VIRTUAL_PRODUCT_ORDER",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "PARTNER_USER_PROVISION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "TERM_DEPOSIT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "INSIGHT_BALANCE_VALUATION_WEEKLY",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "USER_ONBOARDING",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "APPROVAL_REQUEST_USER",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "APPROVAL_REQUEST_MONETARY_ACCOUNT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SHARE_INVITE_BATCH",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "GIROPAY_MERCHANT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "BANK_SWITCH_SERVICE_PAYMENT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CARD_TRANSACTION_FAILED",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CARD_TRANSACTION_SUCCESSFUL",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CARD_TRANSACTION_AMOUNT_UPDATED",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "DRAFT_PAYMENT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "IDEAL",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SOFORT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "PAYMENT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SCHEDULE_RESULT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "SCHEDULE_STATUS",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "WHITELIST_RESULT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "INTEREST",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CHECKOUT_MERCHANT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CARD_TRANSACTION_REFUND",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "BANCONTACT_MERCHANT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CARD_TRANSACTION_TOKENIZED",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "MASTERCARD_IDENTITY_CHECK",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "PAYDAY",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "ADYEN_MERCHANT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "ADYEN_CARD_TRANSACTION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "OPEN_BANKING",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "GINMON_TRANSACTION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "KRAKEN_TRANSACTION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "KRAKEN_STAKING",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "TAX_COLLECTION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "PAYSAFECASH",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "TRANSLINK",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "BIZUM_TRANSACTION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "WERO_ISSUER_TRANSACTION_REFUND",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "BUNQME_TAB",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "BUNQME_TAB_RESULT_INQUIRY",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "BUNQME_TAB_RESULT_RESPONSE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "BUNQME_FUNDRAISER",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "REQUEST",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "TAB_RESULT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "WHITELIST",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "REMINDER_REQUEST",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "BIZUM_REQUEST",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "WERO_ISSUER_TRANSACTION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "FRIEND_SIGN_UP",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "RELATION_USER_SUGGESTION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "LOCATION_EVENT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "TRANSIT_TRIP",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "TREE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "TRIBE_GREEN",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "TRIBE_RANK_GREEN",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "GREEN_O_METER",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "TRIBE_COMMON_GOAL",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "ACHIEVEMENT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "JACKPOT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "JACKPOT_INVITE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "WHEEL_OF_FORTUNE_PRIZE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "REMINDER_WHEEL_OF_FORTUNE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "FEATURE_ANNOUNCEMENT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "FEATURE_SUGGESTION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "PROMOTION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CARD_DYNAMIC_CURRENCY_CONVERSION_WARNING",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "MARKETING_COMMUNICATION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "REGISTRY_MARKETING_COMMUNICATION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "ASSISTANT_ACTION_SUGGESTION",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "EXPERIENCE",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "REFERRAL",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "REWARD",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "INVITE_REFERRAL_STREAK",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "CASHBACK",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "POINT",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "POINT_SUMMARY",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "USER_REFERRAL_INVITOR",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "USER_PARTNER_PROMOTION_REFERRAL",
+                    "notification_delivery_method": "PUSH"
+                },
+                {
+                    "category": "REGISTRY_FEED",
+                    "notification_delivery_method": "PUSH"
+                }
+            ],
+            "place_of_birth": "Hurdegaryp",
+            "public_nick_name": "Catrice",
+            "public_uuid": "e1d11e13-85be-415b-b7ed-970df840241e",
+            "region": "en_US",
+            "relations": [],
+            "session_timeout": 604800,
+            "status": "ACTIVE",
+            "sub_status": "NONE",
+            "tax_resident": [],
+            "updated": "2026-04-24 23:29:36.544789",
+            "version_terms_of_service": "1"
+        }
+    }
+}

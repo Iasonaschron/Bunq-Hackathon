@@ -1,0 +1,150 @@
+.cl-screen {
+  min-height: 100svh;
+  background: #F2F2F7;
+  padding-bottom: 72px;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.cl-header {
+  background: #FFFFFF;
+  padding: 20px 20px 14px;
+  border-bottom: 0.5px solid #E5E5EA;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.cl-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1C1C1E;
+  letter-spacing: -0.5px;
+}
+
+.cl-body {
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cl-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.cl-item--pinned {
+  border: 1.5px solid #00D166;
+  box-shadow: 0 4px 18px rgba(0, 209, 102, 0.14);
+}
+
+.cl-item--clickable {
+  cursor: pointer;
+}
+
+.cl-item--clickable:active {
+  transform: scale(0.975);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+
+.cl-item--static {
+  cursor: default;
+  opacity: 0.68;
+}
+
+.cl-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFFFFF;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+  letter-spacing: -0.5px;
+}
+
+.cl-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.cl-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.cl-bottom {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cl-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1C1C1E;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cl-time {
+  font-size: 13px;
+  color: #8E8E93;
+  flex-shrink: 0;
+}
+
+.cl-name-block {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.cl-members {
+  font-size: 12px;
+  color: #8E8E93;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+}
+
+.cl-preview {
+  font-size: 14px;
+  color: #8E8E93;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.cl-preview--bold {
+  color: #1C1C1E;
+  font-weight: 500;
+}
+
+.cl-unread-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #00D166;
+  flex-shrink: 0;
+}
