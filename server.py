@@ -83,7 +83,7 @@ BOT_NAMES = {"Marco", "Sofia", "Jan"}
 
 
 def _bunq_get_balance() -> float:
-    url = f"{BUNQ_BASE}/user/{BUNQ_USER_ID}/monetary-account/{BUNQ_ACCOUNT_ID}"
+    url = f"{BUNQ_BASE}/user/{bunq_user_id}/monetary-account/{bunq_account_id}"
     r = requests.get(url, headers=BUNQ_HEADERS, timeout=8)
     data = r.json()
     return float(data["Response"][0]["MonetaryAccountBank"]["balance"]["value"])
