@@ -2,11 +2,20 @@
   --bg: #0f0f0f;
   --bg-surface: #1a1a1a;
   --bg-elevated: #242424;
-  --text: #e5e5e5;
+  --text: #f0f0f0;
   --text-muted: #888;
-  --accent: #FF8C00;
-  --accent-dim: rgba(255, 140, 0, 0.15);
+  --accent: #2ECC71;
+  --accent-strong: #27ae60;
+  --accent-dim: rgba(46, 204, 113, 0.14);
   --border: #2a2a2a;
+  /* bunq colorful palette */
+  --c-green: #2ECC71;
+  --c-pink: #FF3D7F;
+  --c-yellow: #FFD200;
+  --c-blue: #4DA1FF;
+  --c-purple: #A78BFA;
+  --c-orange: #FF8C5A;
+  --c-coral: #FF6B6B;
 
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
   font-size: 16px;

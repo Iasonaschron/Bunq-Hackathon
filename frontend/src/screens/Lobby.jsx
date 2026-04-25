@@ -2,11 +2,11 @@ import { useState, useEffect, useRef } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import "./Lobby.css"
 
-const API = "http://localhost:8000"
+const API = `http://${window.location.hostname}:8000`
 
 const ME = "Catrice"
 const BOTS = ["Marco", "Sofia", "Jan"]
-const COLORS = { Marco: "#e8855a", Sofia: "#a78bfa", Catrice: "#00D166", Jan: "#60a5fa" }
+const COLORS = { Marco: "#e8855a", Sofia: "#a78bfa", Catrice: "#2ECC71", Jan: "#60a5fa" }
 
 function randDelay(min, max) {
   return min + Math.random() * (max - min)
@@ -106,7 +106,7 @@ export default function Lobby() {
       {error && <p className="lobby-error">{error}</p>}
 
       <button className="lobby-start-btn" onClick={startGame} disabled={loading}>
-        {loading ? "Starting..." : "Start Game 🎰"}
+        {loading ? "Starting..." : "Start Game"}
       </button>
     </div>
   )

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import "./Game.css"
 
-const API = "http://localhost:8000"
+const API = `http://${window.location.hostname}:8000`
 const TOTAL_ROUNDS = 6
 const TIMER_SECONDS = 10
 
@@ -12,7 +12,7 @@ const BOT_PLAYERS = [
   { name: "Sofia", user_id: 1003 },
   { name: "Jan",   user_id: 1004 },
 ]
-const COLORS = { Catrice: "#00D166", Marco: "#e8855a", Sofia: "#a78bfa", Jan: "#60a5fa" }
+const COLORS = { Catrice: "#2ECC71", Marco: "#e8855a", Sofia: "#a78bfa", Jan: "#60a5fa" }
 
 export default function Game() {
   const navigate = useNavigate()
@@ -248,8 +248,8 @@ export default function Game() {
       {revealed && guessResult && (
         <div className={`game-result-banner ${guessResult.correct ? "game-result-correct" : "game-result-wrong"}`}>
           {guessResult.correct
-            ? `Correct! +${guessResult.points_earned}pts 🎉 — it was ${guessable.find(p => p.user_id === guessResult.correct_player_id)?.name}`
-            : `Wrong 😬 — it was ${guessable.find(p => p.user_id === guessResult.correct_player_id)?.name}`
+            ? `Correct! +${guessResult.points_earned}pts — it was ${guessable.find(p => p.user_id === guessResult.correct_player_id)?.name}`
+            : `Wrong — it was ${guessable.find(p => p.user_id === guessResult.correct_player_id)?.name}`
           }
         </div>
       )}

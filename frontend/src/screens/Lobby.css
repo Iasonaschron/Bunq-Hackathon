@@ -66,8 +66,8 @@
 }
 
 @keyframes pulse-border {
-  0%   { box-shadow: 0 0 0 0 rgba(255,140,0,0.4); }
-  50%  { box-shadow: 0 0 0 6px rgba(255,140,0,0); }
+  0%   { box-shadow: 0 0 0 0 rgba(46, 204, 113,0.4); }
+  50%  { box-shadow: 0 0 0 6px rgba(46, 204, 113,0); }
   100% { box-shadow: none; }
 }
 

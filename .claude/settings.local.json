@@ -15,7 +15,10 @@
       "Bash(curl -s -X POST http://localhost:8000/reset)",
       "Bash(curl -s -X POST http://localhost:8000/prepare)",
       "Bash(python *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(ipconfig)",
+      "Bash(findstr \"IPv4\")",
+      "Bash(taskkill /F /IM node.exe)"
     ]
   }
 }

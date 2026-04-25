@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./Results.css"
 
-const API = "http://localhost:8000"
+const API = `http://${window.location.hostname}:8000`
 const BET = 10
 
 export default function Results() {

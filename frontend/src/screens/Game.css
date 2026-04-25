@@ -89,15 +89,15 @@
 }
 
 .game-result-correct {
-  background: rgba(52, 211, 153, 0.15);
-  color: #34d399;
-  border: 1px solid rgba(52, 211, 153, 0.3);
+  background: rgba(46, 204, 113, 0.18);
+  color: var(--c-green);
+  border: 1px solid rgba(46, 204, 113, 0.4);
 }
 
 .game-result-wrong {
-  background: rgba(248, 113, 113, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(248, 113, 113, 0.3);
+  background: rgba(255, 61, 127, 0.15);
+  color: var(--c-pink);
+  border: 1px solid rgba(255, 61, 127, 0.35);
 }
 
 .game-players {
@@ -266,12 +266,12 @@
 }
 
 .mid-lb-row--me {
-  background: rgba(255, 140, 0, 0.15);
-  border: 1px solid rgba(255, 140, 0, 0.4);
+  background: rgba(46, 204, 113, 0.15);
+  border: 1px solid rgba(46, 204, 113, 0.4);
 }
 
 .mid-lb-row--me .mid-lb-name {
-  color: #FF8C00;
+  color: var(--accent);
   font-weight: 700;
 }
 

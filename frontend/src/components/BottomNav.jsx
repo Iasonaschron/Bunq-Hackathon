@@ -2,9 +2,9 @@ import { useNavigate, useLocation } from "react-router-dom"
 import "./BottomNav.css"
 
 const TABS = [
-  { icon: "🏠", label: "Home", path: "/" },
-  { icon: "💬", label: "Messages", path: "/messages" },
-  { icon: "👤", label: "Profile", path: null },
+  { label: "Home", path: "/" },
+  { label: "Messages", path: "/messages" },
+  { label: "Profile", path: null },
 ]
 
 export default function BottomNav() {
@@ -32,7 +32,6 @@ export default function BottomNav() {
           onClick={tab.path ? () => navigate(tab.path) : undefined}
           disabled={!tab.path}
         >
-          <span className="bn-icon">{tab.icon}</span>
           <span className="bn-label">{tab.label}</span>
         </button>
       ))}
