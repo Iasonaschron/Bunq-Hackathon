@@ -9,35 +9,39 @@ class ScoredTransaction:
     score: int
 
 
+def _amount(tx: dict) -> float:
+    return abs(float(tx["amount"]["value"]))
+
+
+def _hour(tx: dict) -> int:
+    return int(tx["created"].split(" ")[1].split(":")[0])
+
+
 def score_transaction(tx: dict, player_avg: float) -> int:
+    amt = _amount(tx)
+    hour = _hour(tx)
     score = 0
-    if tx["amount"] > player_avg * 2:
+    if amt > player_avg * 2:
         score += 3
-    if tx["hour"] < 5:
+    if hour < 5:
         score += 3
-    if tx["amount"] > 200:
+    if amt > 200:
         score += 2
-    if tx["amount"] % 50 == 0:
+    if amt % 50 == 0:
         score += 1
     return score
 
 
 def pick_interesting_transaction(players, used_clues: list, threshold: int = 3) -> ScoredTransaction | None:
-    """
-    Score all transactions relative to each player's own average.
-    Pick one fairly across players (uniform distribution).
-    Never repeats a used clue (matched by description+amount).
-    Lowers threshold and retries if nothing passes.
-    """
     while threshold >= 0:
         candidates = []
         for player in players:
             txs = player.transactions
             if not txs:
                 continue
-            player_avg = sum(tx["amount"] for tx in txs) / len(txs)
+            player_avg = sum(_amount(tx) for tx in txs) / len(txs)
             for tx in txs:
-                key = (player.name, tx["description"], tx["amount"])
+                key = (player.name, tx["description"], tx["amount"]["value"])
                 if key in used_clues:
                     continue
                 s = score_transaction(tx, player_avg)
@@ -45,7 +49,6 @@ def pick_interesting_transaction(players, used_clues: list, threshold: int = 3) 
                     candidates.append(ScoredTransaction(transaction=tx, player_name=player.name, score=s))
 
         if candidates:
-            # pick uniformly across players to avoid always hitting the same person
             by_player: dict[str, list[ScoredTransaction]] = {}
             for c in candidates:
                 by_player.setdefault(c.player_name, []).append(c)

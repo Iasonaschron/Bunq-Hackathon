@@ -3,16 +3,16 @@ import { useNavigate, useLocation } from "react-router-dom"
 import "./Game.css"
 
 const API = "http://localhost:8000"
-const TOTAL_ROUNDS = 5
+const TOTAL_ROUNDS = 6
 const TIMER_SECONDS = 10
 
-const GUESSABLE = [
+const BOT_PLAYERS = [
   { name: "Catrice", user_id: 3628850 },
   { name: "Marco",   user_id: 1002 },
   { name: "Sofia",   user_id: 1003 },
   { name: "Jan",     user_id: 1004 },
 ]
-const COLORS = { Catrice: "#34d399", Marco: "#e8855a", Sofia: "#a78bfa", Jan: "#60a5fa" }
+const COLORS = { Catrice: "#34d399", Marco: "#e8855a", Sofia: "#a78bfa", Jan: "#60a5fa", Jchro: "#FF8C00" }
 
 export default function Game() {
   const { state } = useLocation()
@@ -29,7 +29,10 @@ export default function Game() {
   const [showLeaderboard, setShowLeaderboard] = useState(false)
   const [midScores, setMidScores] = useState([])
   const [scoreDeltas, setScoreDeltas] = useState({})
-  const [hasGuessed, setHasGuessed] = useState(false)  // local player submitted
+  const [hasGuessed, setHasGuessed] = useState(false)
+  const [selectedId, setSelectedId] = useState(null)
+
+  const guessable = [...BOT_PLAYERS, { name: player?.name ?? "Jchro", user_id: player?.player_id ?? 9999 }]
 
   const timerRef = useRef(null)
   const pollRef = useRef(null)
@@ -55,6 +58,7 @@ export default function Game() {
     setRoundStatus([])
     setShowLeaderboard(false)
     setHasGuessed(false)
+    setSelectedId(null)
     guessedRef.current = false
     setTimeLeft(TIMER_SECONDS)
 
@@ -104,6 +108,7 @@ export default function Game() {
   }, [loading])
 
   async function fetchRoundStatus(roundIdx) {
+    if (roundIdx >= TOTAL_ROUNDS) return
     try {
       const r = await fetch(`${API}/round-status?round=${roundIdx}`)
       if (!r.ok) return
@@ -156,6 +161,8 @@ export default function Game() {
       setShowLeaderboard(true)
 
       setTimeout(() => {
+        clearInterval(timerRef.current)
+        clearInterval(pollRef.current)
         if (currentRound + 1 >= TOTAL_ROUNDS) {
           navigate("/results")
         } else {
@@ -170,6 +177,7 @@ export default function Game() {
     if (guessedRef.current || revealed) return
     guessedRef.current = true
     setHasGuessed(true)
+    setSelectedId(targetPlayer?.user_id ?? -1)
 
     try {
       const r = await fetch(`${API}/guess`, {
@@ -214,21 +222,23 @@ export default function Game() {
       {revealed && guessResult && (
         <div className={`game-result-banner ${guessResult.correct ? "game-result-correct" : "game-result-wrong"}`}>
           {guessResult.correct
-            ? `Correct! +${guessResult.points_earned}pts 🎉 — it was ${GUESSABLE.find(p => p.user_id === guessResult.correct_player_id)?.name}`
-            : `Wrong 😬 — it was ${GUESSABLE.find(p => p.user_id === guessResult.correct_player_id)?.name}`
+            ? `Correct! +${guessResult.points_earned}pts 🎉 — it was ${guessable.find(p => p.user_id === guessResult.correct_player_id)?.name}`
+            : `Wrong 😬 — it was ${guessable.find(p => p.user_id === guessResult.correct_player_id)?.name}`
           }
         </div>
       )}
 
       <div className="game-players">
-        {GUESSABLE.map((p) => {
+        {guessable.map((p) => {
           const status = roundStatus.find(s => s.player_id === p.user_id)
           const isAnswer = revealed && guessResult && p.user_id === guessResult.correct_player_id
+          const isSelected = selectedId === p.user_id
+          const isDimmed = hasGuessed && !revealed && !isSelected
           return (
             <button
               key={p.user_id}
-              className={`player-btn ${isAnswer ? "player-btn--correct" : ""} ${hasGuessed && !revealed ? "player-btn--locked" : ""}`}
-              style={{ "--player-color": COLORS[p.name] }}
+              className={`player-btn ${isAnswer ? "player-btn--correct" : ""} ${isSelected ? "player-btn--selected" : ""} ${isDimmed ? "player-btn--dimmed" : ""}`}
+              style={{ "--player-color": COLORS[p.name] ?? "#888" }}
               onClick={() => submitGuess(p)}
               disabled={hasGuessed || revealed || loading}
             >
@@ -247,9 +257,9 @@ export default function Game() {
           <p className="mid-lb-subtitle">After round {round + 1}</p>
           <div className="mid-lb-list">
             {midScores.map((s, i) => (
-              <div key={s.name} className="mid-lb-row">
+              <div key={s.name} className={`mid-lb-row${s.name === (player?.name ?? "Jchro") ? " mid-lb-row--me" : ""}`}>
                 <span className="mid-lb-rank">#{i + 1}</span>
-                <span className="mid-lb-name">{s.name}</span>
+                <span className="mid-lb-name">{s.name}{s.name === (player?.name ?? "Jchro") ? " (you)" : ""}</span>
                 <div className="mid-lb-right">
                   <span className="mid-lb-score">{s.score}pts</span>
                   {scoreDeltas[s.name] > 0 && (

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import "./Lobby.css"
 
@@ -14,8 +14,9 @@ function randDelay(min, max) {
 export default function Lobby() {
   const { state } = useLocation()
   const navigate = useNavigate()
-  const player = state?.player
+  const [player, setPlayer] = useState(state?.player)
   const bet = state?.bet ?? 10
+  const initDone = useRef(false)
 
   // Start with only the human player visible
   const [joined, setJoined] = useState(["Jchro"])
@@ -25,9 +26,21 @@ export default function Lobby() {
 
   const pot = bet * (joined.length)
 
-  // Kick off background clue generation as soon as lobby loads
+  // Reset, kick off clue generation, then re-join the human player
   useEffect(() => {
-    fetch(`${API}/prepare`, { method: "POST" }).catch(() => {})
+    if (initDone.current) return
+    initDone.current = true
+    const name = state?.player?.name ?? "Jchro"
+    fetch(`${API}/reset`, { method: "POST" })
+      .then(() => fetch(`${API}/prepare`, { method: "POST" }))
+      .then(() => fetch(`${API}/join`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name }),
+      }))
+      .then(r => r.json())
+      .then(p => setPlayer(p))
+      .catch(() => {})
   }, [])
 
   // Trickle in fake players one by one
@@ -35,7 +48,7 @@ export default function Lobby() {
     let cancelled = false
     async function trickle() {
       for (const bot of BOTS) {
-        const delay = randDelay(1000, 4000)
+        const delay = randDelay(400, 1000)
         await new Promise(r => setTimeout(r, delay))
         if (cancelled) return
         setJoined(prev => [...prev, bot])

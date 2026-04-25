@@ -177,6 +177,15 @@
   border-color: var(--border);
 }
 
+.player-btn--selected {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.player-btn--dimmed {
+  opacity: 0.3;
+}
+
 .game-guess-locked {
   margin: 0 20px 12px;
   padding: 10px 16px;
@@ -254,6 +263,16 @@
   background: var(--bg-surface);
   border-radius: 12px;
   padding: 14px 16px;
+}
+
+.mid-lb-row--me {
+  background: rgba(255, 140, 0, 0.15);
+  border: 1px solid rgba(255, 140, 0, 0.4);
+}
+
+.mid-lb-row--me .mid-lb-name {
+  color: #FF8C00;
+  font-weight: 700;
 }
 
 .mid-lb-rank {
