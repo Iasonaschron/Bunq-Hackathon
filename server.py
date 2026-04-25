@@ -19,25 +19,45 @@ app.add_middleware(
 
 fake_transactions = {
     "Catrice": [
-        {"amount": 89.50, "description": "Uber Eats", "hour": 2, "category": "food"},
-        {"amount": 340.00, "description": "Nike Store", "hour": 14, "category": "shopping"},
-        {"amount": 4.50, "description": "Albert Heijn", "hour": 8, "category": "groceries"},
-        {"amount": 199.00, "description": "Zara", "hour": 22, "category": "shopping"},
+        {"id": "tx_c1", "created": "2026-04-24 02:18:00.000000", "amount": {"currency": "EUR", "value": "-34.80"}, "description": "Uber Eats", "counterparty_alias": {"display_name": "Uber Eats B.V."}},
+        {"id": "tx_c2", "created": "2026-04-22 23:45:00.000000", "amount": {"currency": "EUR", "value": "-34.20"}, "description": "Uber Eats", "counterparty_alias": {"display_name": "Uber Eats B.V."}},
+        {"id": "tx_c3", "created": "2026-04-18 01:30:00.000000", "amount": {"currency": "EUR", "value": "-27.50"}, "description": "Thuisbezorgd", "counterparty_alias": {"display_name": "Thuisbezorgd B.V."}},
+        {"id": "tx_c4", "created": "2026-04-15 14:20:00.000000", "amount": {"currency": "EUR", "value": "-199.00"}, "description": "Zara", "counterparty_alias": {"display_name": "Zara Netherlands B.V."}},
+        {"id": "tx_c5", "created": "2026-04-12 16:10:00.000000", "amount": {"currency": "EUR", "value": "-89.50"}, "description": "Nike", "counterparty_alias": {"display_name": "Nike Store Amsterdam"}},
+        {"id": "tx_c6", "created": "2026-04-10 11:30:00.000000", "amount": {"currency": "EUR", "value": "-45.00"}, "description": "Rituals", "counterparty_alias": {"display_name": "Rituals Cosmetics"}},
+        {"id": "tx_c7", "created": "2026-04-08 09:15:00.000000", "amount": {"currency": "EUR", "value": "-6.40"}, "description": "Albert Heijn", "counterparty_alias": {"display_name": "Albert Heijn B.V."}},
+        {"id": "tx_c8", "created": "2026-04-05 21:55:00.000000", "amount": {"currency": "EUR", "value": "-29.90"}, "description": "H&M", "counterparty_alias": {"display_name": "H&M Netherlands"}},
+        {"id": "tx_c9", "created": "2026-04-02 02:40:00.000000", "amount": {"currency": "EUR", "value": "-41.30"}, "description": "Uber Eats", "counterparty_alias": {"display_name": "Uber Eats B.V."}},
     ],
     "Marco": [
-        {"amount": 1200.00, "description": "Airbnb Ibiza", "hour": 23, "category": "travel"},
-        {"amount": 50.00, "description": "Crypto.com", "hour": 3, "category": "investment"},
-        {"amount": 8.50, "description": "McDonald's", "hour": 4, "category": "food"},
+        {"id": "tx_m1", "created": "2026-04-23 03:12:00.000000", "amount": {"currency": "EUR", "value": "-500.00"}, "description": "Kraken", "counterparty_alias": {"display_name": "Kraken Europe B.V."}},
+        {"id": "tx_m2", "created": "2026-04-20 23:50:00.000000", "amount": {"currency": "EUR", "value": "-1200.00"}, "description": "Booking.com", "counterparty_alias": {"display_name": "Booking.com B.V."}},
+        {"id": "tx_m3", "created": "2026-04-17 04:05:00.000000", "amount": {"currency": "EUR", "value": "-200.00"}, "description": "Kraken", "counterparty_alias": {"display_name": "Kraken Europe B.V."}},
+        {"id": "tx_m4", "created": "2026-04-15 03:58:00.000000", "amount": {"currency": "EUR", "value": "-8.50"}, "description": "McDonald's", "counterparty_alias": {"display_name": "McDonald's Amsterdam Centraal"}},
+        {"id": "tx_m5", "created": "2026-04-11 23:20:00.000000", "amount": {"currency": "EUR", "value": "-32.00"}, "description": "Thuisbezorgd", "counterparty_alias": {"display_name": "Thuisbezorgd B.V."}},
+        {"id": "tx_m6", "created": "2026-04-08 04:30:00.000000", "amount": {"currency": "EUR", "value": "-150.00"}, "description": "Kraken", "counterparty_alias": {"display_name": "Kraken Europe B.V."}},
+        {"id": "tx_m7", "created": "2026-04-04 07:10:00.000000", "amount": {"currency": "EUR", "value": "-5.80"}, "description": "Albert Heijn", "counterparty_alias": {"display_name": "Albert Heijn B.V."}},
     ],
     "Sofia": [
-        {"amount": 250.00, "description": "Sephora", "hour": 13, "category": "beauty"},
-        {"amount": 45.00, "description": "Astrology reading", "hour": 21, "category": "misc"},
-        {"amount": 600.00, "description": "Louis Vuitton", "hour": 15, "category": "shopping"},
+        {"id": "tx_s1", "created": "2026-04-24 13:40:00.000000", "amount": {"currency": "EUR", "value": "-89.00"}, "description": "Sephora", "counterparty_alias": {"display_name": "Sephora Netherlands"}},
+        {"id": "tx_s2", "created": "2026-04-21 15:20:00.000000", "amount": {"currency": "EUR", "value": "-600.00"}, "description": "Booking.com", "counterparty_alias": {"display_name": "Booking.com B.V."}},
+        {"id": "tx_s3", "created": "2026-04-19 12:10:00.000000", "amount": {"currency": "EUR", "value": "-67.50"}, "description": "Sephora", "counterparty_alias": {"display_name": "Sephora Netherlands"}},
+        {"id": "tx_s4", "created": "2026-04-16 14:55:00.000000", "amount": {"currency": "EUR", "value": "-45.00"}, "description": "Rituals", "counterparty_alias": {"display_name": "Rituals Cosmetics"}},
+        {"id": "tx_s5", "created": "2026-04-13 21:30:00.000000", "amount": {"currency": "EUR", "value": "-28.40"}, "description": "Uber Eats", "counterparty_alias": {"display_name": "Uber Eats B.V."}},
+        {"id": "tx_s6", "created": "2026-04-10 13:00:00.000000", "amount": {"currency": "EUR", "value": "-42.00"}, "description": "Sephora", "counterparty_alias": {"display_name": "Sephora Netherlands"}},
+        {"id": "tx_s7", "created": "2026-04-07 10:30:00.000000", "amount": {"currency": "EUR", "value": "-9.20"}, "description": "Albert Heijn", "counterparty_alias": {"display_name": "Albert Heijn B.V."}},
+        {"id": "tx_s8", "created": "2026-04-03 16:40:00.000000", "amount": {"currency": "EUR", "value": "-110.00"}, "description": "Sephora", "counterparty_alias": {"display_name": "Sephora Netherlands"}},
     ],
     "Jan": [
-        {"amount": 12.00, "description": "Steam games", "hour": 1, "category": "gaming"},
-        {"amount": 3.50, "description": "Albert Heijn", "hour": 7, "category": "groceries"},
-        {"amount": 500.00, "description": "GPU purchase", "hour": 2, "category": "tech"},
+        {"id": "tx_j1", "created": "2026-04-23 01:20:00.000000", "amount": {"currency": "EUR", "value": "-59.99"}, "description": "Steam", "counterparty_alias": {"display_name": "Valve Corporation"}},
+        {"id": "tx_j2", "created": "2026-04-21 07:05:00.000000", "amount": {"currency": "EUR", "value": "-4.50"}, "description": "Albert Heijn", "counterparty_alias": {"display_name": "Albert Heijn B.V."}},
+        {"id": "tx_j3", "created": "2026-04-19 02:15:00.000000", "amount": {"currency": "EUR", "value": "-14.99"}, "description": "Steam", "counterparty_alias": {"display_name": "Valve Corporation"}},
+        {"id": "tx_j4", "created": "2026-04-16 14:30:00.000000", "amount": {"currency": "EUR", "value": "-499.00"}, "description": "Coolblue", "counterparty_alias": {"display_name": "Coolblue B.V."}},
+        {"id": "tx_j5", "created": "2026-04-13 03:45:00.000000", "amount": {"currency": "EUR", "value": "-7.99"}, "description": "Steam", "counterparty_alias": {"display_name": "Valve Corporation"}},
+        {"id": "tx_j6", "created": "2026-04-10 08:00:00.000000", "amount": {"currency": "EUR", "value": "-3.80"}, "description": "Albert Heijn", "counterparty_alias": {"display_name": "Albert Heijn B.V."}},
+        {"id": "tx_j7", "created": "2026-04-07 04:10:00.000000", "amount": {"currency": "EUR", "value": "-12.50"}, "description": "McDonald's", "counterparty_alias": {"display_name": "McDonald's Amsterdam Centraal"}},
+        {"id": "tx_j8", "created": "2026-04-04 01:55:00.000000", "amount": {"currency": "EUR", "value": "-19.99"}, "description": "Steam", "counterparty_alias": {"display_name": "Valve Corporation"}},
+        {"id": "tx_j9", "created": "2026-04-01 07:20:00.000000", "amount": {"currency": "EUR", "value": "-5.10"}, "description": "Albert Heijn", "counterparty_alias": {"display_name": "Albert Heijn B.V."}},
     ],
 }
 
@@ -94,18 +114,38 @@ async def _fake_guess(round_idx: int, bot_id: int, delay: float, correct_player_
     _process_guess(bot_id, guessed_id, round_idx)
 
 
+FALLBACK_CLUES = [
+    "Someone spent €89.50 on Uber Eats... at 2am.",
+    "Who dropped €1200 on Booking.com at midnight?",
+    "Someone spent €600 on Sephora in a single visit.",
+    "Who bought €499 worth of tech from Coolblue at 2am?",
+    "Someone has sent €850 to Kraken this month alone.",
+]
+
 def _generate_clues_background():
+    import traceback
+    print(f"[prepare] background thread started — {len(game.players)} players")
     used = []
-    for _ in range(5):
+    fallback_idx = 0
+    for i in range(6):
         scored = pick_interesting_transaction(game.players, used)
         if scored is None:
+            print(f"[prepare] no more interesting transactions at round {i}")
             break
-        clue_text = generate_clue(scored.transaction)
         correct_player = next(p for p in game.players if p.name == scored.player_name)
+        print(f"[prepare] generating clue {i+1} for {scored.player_name}…")
+        try:
+            clue_text = generate_clue(scored.transaction, correct_player.transactions)
+        except Exception as e:
+            print(f"[prepare] Claude API error on clue {i+1}: {e}")
+            traceback.print_exc()
+            clue_text = FALLBACK_CLUES[fallback_idx % len(FALLBACK_CLUES)]
+            fallback_idx += 1
         clue = Clue(text=clue_text, correct_player_id=correct_player.user_id)
         game.clues.append(clue)
         game.rounds.append(Round(clue=clue))
-        used.append((scored.player_name, scored.transaction["description"], scored.transaction["amount"]))
+        used.append((scored.player_name, scored.transaction["description"], scored.transaction["amount"]["value"]))
+        print(f"[prepare] clue {i+1} ready")
     print(f"[prepare] done — {len(game.rounds)} clues ready")
 
 
@@ -130,6 +170,9 @@ def prepare_game():
 
 @app.post("/join")
 def join_game(req: JoinRequest):
+    existing = next((p for p in game.players if p.name.lower() == req.name.lower()), None)
+    if existing:
+        return {"player_id": existing.user_id, "name": existing.name, "balance": existing.balance}
     match = next((p for p in PLAYER_DEFS if p["name"].lower() == req.name.lower()), None)
     if match:
         player = Player(**match, balance=100.0, transactions=fake_transactions.get(match["name"], []))
@@ -173,8 +216,8 @@ def start_game():
 async def get_current_clue():
     if not game.started:
         raise HTTPException(status_code=404, detail="Game not started")
-    # Wait up to 30s for the next clue to be generated (background thread may still be running)
-    for _ in range(300):
+    # Wait up to 60s for the next clue to be generated
+    for _ in range(600):
         if game.current_round < len(game.rounds):
             break
         await asyncio.sleep(0.1)
@@ -249,12 +292,21 @@ def get_scores():
 
 @app.get("/leaderboard")
 def get_leaderboard():
-    roasts = {p.name: generate_roast(p.name, p.transactions) for p in game.players}
-    scores = [{"name": p.name, "score": p.score, "balance": p.balance} for p in game.players]
-    return {
-        "scores": sorted(scores, key=lambda x: x["score"], reverse=True),
-        "roasts": roasts,
-    }
+    if not game.players:
+        return {"scores": []}
+    sorted_players = sorted(game.players, key=lambda p: p.score, reverse=True)
+    bet = game.pot / len(game.players) if game.players else 10.0
+    top_score = sorted_players[0].score
+    winners = [p for p in sorted_players if p.score == top_score]
+    winner_share = game.pot / len(winners)
+    scores = []
+    for p in sorted_players:
+        if p.score == top_score:
+            euro_delta = winner_share - bet
+        else:
+            euro_delta = -bet
+        scores.append({"name": p.name, "score": p.score, "euro_delta": round(euro_delta, 2)})
+    return {"scores": scores}
 
 
 @app.get("/transactions")
