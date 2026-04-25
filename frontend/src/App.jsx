@@ -4,6 +4,7 @@ import ChatDemo from "./screens/ChatDemo"
 import ChatList from "./screens/ChatList"
 import GroupChat from "./screens/GroupChat"
 import Home from "./screens/Home"
+import BillSplitter from "./screens/BillSplitter"
 import Lobby from "./screens/Lobby"
 import Game from "./screens/Game"
 import Results from "./screens/Results"
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/messages" element={<ChatList />} />
           <Route path="/group" element={<GroupChat />} />
+          <Route path="/split" element={<BillSplitter />} />
           <Route path="/demo" element={<ChatDemo />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/lobby" element={<Lobby />} />

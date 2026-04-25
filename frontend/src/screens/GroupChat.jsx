@@ -63,6 +63,9 @@ export default function GroupChat() {
       </div>
 
       <div className="gc-footer">
+        <button className="gc-split-btn" onClick={() => navigate("/split")}>
+          🧾 Split Bill
+        </button>
         <button className="gc-play-btn" onClick={() => navigate("/chat")}>
           💸 Play Transaction Roulette
         </button>
