@@ -1,0 +1,120 @@
+.lobby-screen {
+  display: flex;
+  flex-direction: column;
+  padding: 32px 20px 40px;
+  min-height: 100svh;
+  gap: 20px;
+}
+
+.lobby-title {
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.lobby-bet-info {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.lobby-pot {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lobby-pot-label {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.lobby-pot-amount {
+  color: var(--accent);
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.lobby-players {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.lobby-player-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-surface);
+  border-radius: 12px;
+  padding: 12px 16px;
+  animation: player-in 0.35s ease;
+}
+
+@keyframes player-in {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.lobby-player-row--new {
+  border: 1px solid var(--accent);
+  background: var(--accent-dim);
+  animation: player-in 0.35s ease, pulse-border 0.8s ease;
+}
+
+@keyframes pulse-border {
+  0%   { box-shadow: 0 0 0 0 rgba(255,140,0,0.4); }
+  50%  { box-shadow: 0 0 0 6px rgba(255,140,0,0); }
+  100% { box-shadow: none; }
+}
+
+.avatar-md {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000;
+  flex-shrink: 0;
+}
+
+.lobby-player-name {
+  flex: 1;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.lobby-player-joined {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.lobby-start-btn {
+  width: 100%;
+  padding: 18px;
+  font-size: 17px;
+  border-radius: 14px;
+  margin-top: auto;
+}
+
+.lobby-start-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.lobby-error {
+  color: #f87171;
+  font-size: 14px;
+}
+
+.lobby-status {
+  color: var(--accent);
+  font-size: 14px;
+  text-align: center;
+}

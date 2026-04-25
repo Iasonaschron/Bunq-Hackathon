@@ -5,7 +5,15 @@
       "Bash(npm install *)",
       "PowerShell(New-Item *)",
       "Bash(pkill -f \"uvicorn server:app\")",
-      "Bash(python -m uvicorn server:app --reload)"
+      "Bash(python -m uvicorn server:app --reload)",
+      "Bash(curl -s http://localhost:8000/scores)",
+      "Bash(curl -s \"http://localhost:8000/round-status?round=0\")",
+      "Bash(curl -s http://localhost:8000/openapi.json)",
+      "Bash(python -m json.tool)",
+      "Bash(taskkill /F /IM python.exe)",
+      "PowerShell(Stop-Process *)",
+      "Bash(curl -s -X POST http://localhost:8000/reset)",
+      "Bash(curl -s -X POST http://localhost:8000/prepare)"
     ]
   }
 }

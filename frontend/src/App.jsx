@@ -1,25 +1,21 @@
-import { useState } from "react"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import Chat from "./screens/Chat"
 import Lobby from "./screens/Lobby"
 import Game from "./screens/Game"
-import Leaderboard from "./screens/Leaderboard"
+import Results from "./screens/Results"
 
-function App() {
-  const [screen, setScreen] = useState("lobby")
-  const [player, setPlayer] = useState(null)
-
+export default function App() {
   return (
-    <div style={{ fontFamily: "sans-serif", maxWidth: 600, margin: "0 auto", padding: 24 }}>
-      {screen === "lobby" && (
-        <Lobby onJoin={(p) => { setPlayer(p); setScreen("game") }} />
-      )}
-      {screen === "game" && (
-        <Game player={player} onFinish={() => setScreen("leaderboard")} />
-      )}
-      {screen === "leaderboard" && (
-        <Leaderboard onRestart={() => setScreen("lobby")} />
-      )}
-    </div>
+    <BrowserRouter>
+      <div className="app-shell">
+        <Routes>
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/lobby" element={<Lobby />} />
+          <Route path="/game" element={<Game />} />
+          <Route path="/results" element={<Results />} />
+          <Route path="*" element={<Navigate to="/chat" replace />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   )
 }
-
-export default App

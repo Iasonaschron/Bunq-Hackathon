@@ -21,6 +21,8 @@ class Clue:
 class Round:
     clue: Clue
     guesses: dict[int, int] = field(default_factory=dict)  # guesser_id -> guessed_player_id
+    correct_count: int = 0                                  # how many correct guesses so far (for speed scoring)
+    fake_guesses_scheduled: bool = False
     resolved: bool = False
 
 @dataclass
@@ -32,5 +34,6 @@ class GameState:
     current_round: int = 0
     started: bool = False
     finished: bool = False
+    preparing: bool = False
 
 game = GameState()

@@ -1,63 +1,99 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useNavigate, useLocation } from "react-router-dom"
+import "./Lobby.css"
 
 const API = "http://localhost:8000"
 
-export default function Lobby({ onJoin }) {
-  const [name, setName] = useState("")
+const BOTS = ["Catrice", "Marco", "Sofia", "Jan"]
+const COLORS = { Marco: "#e8855a", Sofia: "#a78bfa", Catrice: "#34d399", Jan: "#60a5fa", Jchro: "#FF8C00" }
+
+function randDelay(min, max) {
+  return min + Math.random() * (max - min)
+}
+
+export default function Lobby() {
+  const { state } = useLocation()
+  const navigate = useNavigate()
+  const player = state?.player
+  const bet = state?.bet ?? 10
+
+  // Start with only the human player visible
+  const [joined, setJoined] = useState(["Jchro"])
+  const [newlyJoined, setNewlyJoined] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const [status, setStatus] = useState("")
+  const pot = bet * (joined.length)
 
-  async function handleJoin() {
-    if (!name.trim()) return
+  // Kick off background clue generation as soon as lobby loads
+  useEffect(() => {
+    fetch(`${API}/prepare`, { method: "POST" }).catch(() => {})
+  }, [])
+
+  // Trickle in fake players one by one
+  useEffect(() => {
+    let cancelled = false
+    async function trickle() {
+      for (const bot of BOTS) {
+        const delay = randDelay(1000, 4000)
+        await new Promise(r => setTimeout(r, delay))
+        if (cancelled) return
+        setJoined(prev => [...prev, bot])
+        setNewlyJoined(bot)
+        setTimeout(() => setNewlyJoined(null), 800)
+      }
+    }
+    trickle()
+    return () => { cancelled = true }
+  }, [])
+
+  async function startGame() {
     setLoading(true)
     setError(null)
     try {
-      setStatus("Joining game...")
-      const joinRes = await fetch(`${API}/join`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name }),
-      })
-      const player = await joinRes.json()
-
-      setStatus("Generating clues with AI... (this takes ~10s)")
-      const startRes = await fetch(`${API}/start`, { method: "POST" })
-      if (!startRes.ok) {
-        const err = await startRes.json()
-        // "already started" is fine — just proceed
-        if (!err.detail?.includes("already started")) {
-          throw new Error(err.detail || "Failed to start game")
-        }
+      const res = await fetch(`${API}/start`, { method: "POST" })
+      if (!res.ok) {
+        const err = await res.json()
+        if (!err.detail?.includes("already started")) throw new Error(err.detail)
       }
-
-      onJoin(player)
+      navigate("/game", { state: { player } })
     } catch (e) {
-      setError(e.message || "Could not connect to server.")
+      setError(e.message || "Failed to start game")
     } finally {
       setLoading(false)
-      setStatus("")
     }
   }
 
   return (
-    <div>
-      <h1>🎰 Transaction Roulette</h1>
-      <p>Enter your name to join the game. Everyone puts €10 in the pot.</p>
-      <input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && handleJoin()}
-        placeholder="Your name"
-        style={{ padding: 8, fontSize: 16, width: "100%", marginBottom: 12 }}
-      />
-      <br />
-      <button onClick={handleJoin} disabled={loading} style={{ padding: "10px 24px", fontSize: 16 }}>
-        {loading ? "Please wait..." : "Join Game"}
+    <div className="lobby-screen">
+      <h1 className="lobby-title">Waiting for players...</h1>
+      <p className="lobby-bet-info">€{bet} per player</p>
+
+      <div className="lobby-pot">
+        <span className="lobby-pot-label">Total pot</span>
+        <span className="lobby-pot-amount">€{pot}</span>
+      </div>
+
+      <div className="lobby-players">
+        {joined.map((name) => (
+          <div
+            key={name}
+            className={`lobby-player-row ${newlyJoined === name ? "lobby-player-row--new" : ""}`}
+          >
+            <div className="avatar-md" style={{ background: COLORS[name] ?? "#555" }}>
+              {name[0]}
+            </div>
+            <span className="lobby-player-name">{name}</span>
+            <span className="lobby-player-joined">✓</span>
+          </div>
+        ))}
+      </div>
+
+      {error && <p className="lobby-error">{error}</p>}
+
+      <button className="lobby-start-btn" onClick={startGame} disabled={loading}>
+        {loading ? "Starting..." : "Start Game 🎰"}
       </button>
-      {status && <p style={{ color: "#555", marginTop: 12 }}>{status}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   )
 }
