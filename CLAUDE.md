@@ -28,17 +28,27 @@ bunq-hackathon/
 
   bunq_client.py         ← bunq auth boilerplate, ALREADY DONE
   state.py               ← owns game_state dict, imported everywhere
-  server.py              ← FastAPI app, all 5 endpoints
+  server.py              ← FastAPI app, all endpoints
   stats.py               ← interestingness scoring pipeline
   clue_generator.py      ← Claude API integration
 
   frontend/              ← React app via Vite
     src/
       App.jsx
+      components/
+        BottomNav.jsx    ← fixed bottom nav (Home / Messages / Profile)
+        BottomNav.css
       screens/
+        Home.jsx         ← dashboard: balance card + Catrice's transactions
+        Home.css
+        ChatList.jsx     ← bunq-style chat inbox (messages screen)
+        ChatList.css
+        GroupChat.jsx    ← "🏔️ Sky Trip" fake group chat → launches game
+        GroupChat.css
+        Chat.jsx         ← THE GAME (do not touch)
         Lobby.jsx        ← players join, bets placed
         Game.jsx         ← clues shown, guesses made
-        Leaderboard.jsx  ← final scores + AI roast
+        Results.jsx      ← final scores + AI roast
 
 bunq API
 Base URL
@@ -234,6 +244,62 @@ Sugar Daddy max €500 per request
 Transaction data is synthetic — make it funny
 game_state lives in state.py — never recreate it elsewhere
 Keep it simple — 24 hour hackathon
+
+## Frontend — Navigation & Screen Flow (ALREADY DONE)
+
+App.jsx routes:
+  /           → Home.jsx       (dashboard)
+  /messages   → ChatList.jsx   (chat inbox)
+  /group      → GroupChat.jsx  (group chat → launches game)
+  /chat       → Chat.jsx       (THE GAME — do not touch)
+  /lobby      → Lobby.jsx
+  /game       → Game.jsx
+  /results    → Results.jsx
+
+BottomNav.jsx (fixed bottom bar on Home, ChatList, GroupChat):
+- "🏠 Home" → /
+- "💬 Messages" → /messages   (also highlighted when on /group)
+- "👤 Profile" → not clickable, grayed out
+- Active tab shown in bunq green (#00D166)
+- Height: 64px, position: fixed bottom 0
+- All screens that include BottomNav must have padding-bottom: 72px
+
+Home.jsx — dashboard screen:
+- Header: "Hey, Catrice 👋" + green avatar
+- Balance card: fetches GET /transactions on mount
+  - Shows spinner while loading
+  - On success: displays "€ 100.00" (player starting balance)
+  - On failure: displays "—"
+- Quick action pills: "💸 Send" and "📥 Request" (visual only, not functional)
+- Recent Transactions: Catrice's transactions from GET /transactions
+  - Falls back to hardcoded FALLBACK_TXS if server is down or game not started
+  - Shows emoji icon per category, merchant name, time (HH:00), amount in red
+- Category icons: food=🍔 shopping=🛍️ groceries=🛒 travel=✈️ investment=📈
+                  beauty=💄 misc=✨ gaming=🎮 tech=💻
+
+ChatList.jsx — messages inbox:
+- Pinned group chat: "🏔️ Sky Trip" with members Marco, Sofia, Jan, Catrice
+  - Last message: "omg who did that 😭", time: "now"
+  - Clicking navigates to /group
+- DM chats (Marco, Sofia, Jan): non-clickable, grayed out, for visual flavor only
+- Includes BottomNav at the bottom
+
+GroupChat.jsx — fake group chat:
+- Header: "🏔️ Sky Trip" + member list, back arrow → /messages
+- 8 hardcoded messages between Marco, Sofia, Jan, Catrice (funny banter about spending)
+- Footer: prominent bunq-green "💸 Play Transaction Roulette" button → navigates to /chat
+- Fake read-only message input below the button
+- Includes BottomNav at the bottom
+
+Design system (bunq style):
+- Background: #F2F2F7
+- Cards/surfaces: #FFFFFF with border-radius 16-22px
+- Primary green: #00D166
+- Text primary: #1C1C1E
+- Text secondary: #8E8E93
+- Separator: #E5E5EA (0.5px)
+- Font: system-ui / Segoe UI / Roboto
+- Active press: scale(0.975) transform
 
 ## Important fix needed — Player transactions
 
