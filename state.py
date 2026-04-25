@@ -35,5 +35,6 @@ class GameState:
     started: bool = False
     finished: bool = False
     preparing: bool = False
+    generation: int = 0
 
 game = GameState()

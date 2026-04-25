@@ -1,15 +1,19 @@
 .home-screen {
   min-height: 100svh;
-  background: #F2F2F7;
+  max-width: 390px;
+  margin: 0 auto;
+  background: var(--bg);
+  color: var(--text);
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   padding-bottom: 72px;
+  position: relative;
 }
 
 .home-header {
-  background: #FFFFFF;
+  background: var(--bg-surface);
   padding: 20px 20px 16px;
-  border-bottom: 0.5px solid #E5E5EA;
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -24,7 +28,7 @@
 .home-greeting-text {
   font-size: 24px;
   font-weight: 700;
-  color: #1C1C1E;
+  color: var(--text);
   letter-spacing: -0.5px;
 }
 
@@ -32,14 +36,14 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #00D166;
-  color: #FFFFFF;
+  background: linear-gradient(135deg, var(--c-pink) 0%, var(--c-purple) 100%);
+  color: #fff;
   font-size: 16px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 209, 102, 0.35);
+  box-shadow: 0 2px 10px rgba(255, 61, 127, 0.35);
 }
 
 .home-body {
@@ -52,20 +56,20 @@
 /* Balance card */
 
 .home-balance-card {
-  background: linear-gradient(140deg, #00D166 0%, #00A350 100%);
+  background: linear-gradient(135deg, var(--c-green) 0%, var(--c-blue) 50%, var(--c-pink) 100%);
   border-radius: 22px;
   padding: 28px 24px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  box-shadow: 0 6px 28px rgba(0, 209, 102, 0.32);
+  box-shadow: 0 8px 32px rgba(255, 61, 127, 0.25), 0 4px 16px rgba(46, 204, 113, 0.25);
 }
 
 .home-balance-label {
   font-size: 13px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(0, 0, 0, 0.6);
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
@@ -73,22 +77,22 @@
 .home-balance-amount {
   font-size: 44px;
   font-weight: 800;
-  color: #FFFFFF;
+  color: #000;
   letter-spacing: -1.5px;
   line-height: 1;
 }
 
 .home-balance-sub {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(0, 0, 0, 0.55);
   margin-top: 2px;
 }
 
 .home-spinner {
   width: 36px;
   height: 36px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #FFFFFF;
+  border: 3px solid rgba(0, 0, 0, 0.25);
+  border-top-color: #000;
   border-radius: 50%;
   animation: home-spin 0.75s linear infinite;
 }
@@ -106,22 +110,21 @@
 
 .home-action-btn {
   flex: 1;
-  background: #FFFFFF;
-  border: none;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 14px 10px;
   font-size: 15px;
   font-weight: 600;
-  color: #1C1C1E;
+  color: var(--text);
   cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition: transform 0.1s ease, background 0.1s ease;
   letter-spacing: -0.2px;
 }
 
 .home-action-btn:active {
   transform: scale(0.97);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+  background: var(--bg-elevated);
 }
 
 /* Transaction list */
@@ -135,15 +138,15 @@
 .home-section-title {
   font-size: 18px;
   font-weight: 700;
-  color: #1C1C1E;
+  color: var(--text);
   letter-spacing: -0.3px;
   padding-left: 2px;
 }
 
 .home-tx-list {
-  background: #FFFFFF;
+  background: var(--bg-surface);
   border-radius: 18px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border);
   overflow: hidden;
 }
 
@@ -152,7 +155,7 @@
   align-items: center;
   gap: 14px;
   padding: 14px 16px;
-  border-bottom: 0.5px solid #F2F2F7;
+  border-bottom: 1px solid var(--border);
 }
 
 .home-tx-row:last-child {
@@ -163,13 +166,26 @@
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  background: #F2F2F7;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 16px;
+  font-weight: 700;
   flex-shrink: 0;
+  letter-spacing: -0.5px;
+  color: #000;
 }
+
+.home-tx-icon--food      { background: var(--c-yellow); }
+.home-tx-icon--shopping  { background: var(--c-pink); }
+.home-tx-icon--groceries { background: var(--c-green); }
+.home-tx-icon--travel    { background: var(--c-blue); }
+.home-tx-icon--investment{ background: var(--c-purple); }
+.home-tx-icon--beauty    { background: var(--c-coral); }
+.home-tx-icon--gaming    { background: var(--c-purple); }
+.home-tx-icon--tech      { background: var(--c-blue); }
+.home-tx-icon--misc      { background: var(--c-orange); }
+.home-tx-icon--default   { background: var(--bg-elevated); color: var(--text); }
 
 .home-tx-info {
   flex: 1;
@@ -182,7 +198,7 @@
 .home-tx-name {
   font-size: 15px;
   font-weight: 600;
-  color: #1C1C1E;
+  color: var(--text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -190,13 +206,13 @@
 
 .home-tx-meta {
   font-size: 12px;
-  color: #8E8E93;
+  color: var(--text-muted);
   text-transform: capitalize;
 }
 
 .home-tx-amount {
   font-size: 15px;
   font-weight: 600;
-  color: #FF3B30;
+  color: #f87171;
   flex-shrink: 0;
 }

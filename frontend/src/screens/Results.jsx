@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./Results.css"
 
-const API = "http://localhost:8000"
+const API = `http://${window.location.hostname}:8000`
 const BET = 10
 
 export default function Results() {
   const navigate = useNavigate()
   const [scores, setScores] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [settleError, setSettleError] = useState(null)
+  const settledRef = useRef(false)
 
   useEffect(() => {
     fetch(`${API}/scores`)
@@ -16,6 +18,19 @@ export default function Results() {
       .then(d => setScores(d.scores ?? []))
       .catch(() => setScores([]))
       .finally(() => setLoading(false))
+
+    // Trigger the real bunq settlement once
+    if (settledRef.current) return
+    settledRef.current = true
+    fetch(`${API}/settle`, { method: "POST" })
+      .then(r => r.json())
+      .then(d => {
+        if (d.bunq && d.bunq.ok === false) {
+          const body = d.bunq.body ?? d.bunq.error ?? ""
+          setSettleError(`bunq ${d.bunq.status ?? "error"}: ${body.slice(0, 200)}`)
+        }
+      })
+      .catch(() => setSettleError("Could not reach bunq"))
   }, [])
 
   function goBack() {
@@ -43,6 +58,7 @@ export default function Results() {
   return (
     <div className="results-screen">
       <h1 className="results-title">Game Over</h1>
+      {settleError && <p className="results-settle-error">{settleError}</p>}
 
       <div className="results-section">
         <p className="results-section-label">Winners</p>

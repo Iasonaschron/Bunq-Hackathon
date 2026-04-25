@@ -5,19 +5,19 @@ import "./ChatList.css"
 const CHATS = [
   {
     id: "group",
-    name: "🏔️ Sky Trip",
+    name: "Sky Trip",
     members: "Marco, Sofia, Jan, Catrice",
-    preview: "omg who did that 😭",
+    preview: "omg who did that",
     time: "now",
     pinned: true,
     clickable: true,
-    avatarBg: "#00D166",
-    avatarLabel: "🏔️",
+    avatarBg: "#2ECC71",
+    avatarLabel: "ST",
     unread: true,
   },
   {
     id: "marco",
-    name: "Marco 🇮🇹",
+    name: "Marco",
     preview: "bro I'm not paying that",
     time: "22:14",
     clickable: false,
@@ -26,7 +26,7 @@ const CHATS = [
   },
   {
     id: "sofia",
-    name: "Sofia 💅",
+    name: "Sofia",
     preview: "it was NOT me lmaooo",
     time: "22:09",
     clickable: false,
@@ -35,7 +35,7 @@ const CHATS = [
   },
   {
     id: "jan",
-    name: "Jan 🖥️",
+    name: "Jan",
     preview: "statistically speaking...",
     time: "21:58",
     clickable: false,

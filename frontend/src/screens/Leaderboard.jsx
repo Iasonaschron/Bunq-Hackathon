@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-const API = "http://localhost:8000"
+const API = `http://${window.location.hostname}:8000`
 
 export default function Leaderboard({ onRestart }) {
   const [data, setData] = useState(null)

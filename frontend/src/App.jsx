@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import Chat from "./screens/Chat"
 import ChatDemo from "./screens/ChatDemo"
 import ChatList from "./screens/ChatList"
 import GroupChat from "./screens/GroupChat"
@@ -19,7 +18,6 @@ export default function App() {
           <Route path="/group" element={<GroupChat />} />
           <Route path="/split" element={<BillSplitter />} />
           <Route path="/demo" element={<ChatDemo />} />
-          <Route path="/chat" element={<Chat />} />
           <Route path="/lobby" element={<Lobby />} />
           <Route path="/game" element={<Game />} />
           <Route path="/results" element={<Results />} />

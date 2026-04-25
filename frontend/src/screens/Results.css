@@ -20,6 +20,13 @@
   color: var(--text);
 }
 
+.results-settle-error {
+  text-align: center;
+  font-size: 13px;
+  color: #f87171;
+  margin: -16px 0 0;
+}
+
 .results-section {
   display: flex;
   flex-direction: column;
