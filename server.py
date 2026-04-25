@@ -1,29 +1,23 @@
 import asyncio
+import json
 import random
 import threading
-import requests
+import uuid
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from state import game, Player, Clue, Round
 from stats import pick_interesting_transaction
-from clue_generator import generate_clue, generate_roast
-from bunq_client import user_id as BUNQ_USER_ID, account_id as BUNQ_ACCOUNT_ID, headers as BUNQ_HEADERS
+from clue_generator import generate_clue, generate_roast, client as claude_client
+import urllib.request
 
-from bunq.sdk.model.generated.endpoint import (
-    PaymentApiObject as Payment,
-    RequestInquiryApiObject as RequestInquiry,
-)
-from bunq.sdk.model.generated.object_ import (
-    AmountObject as Amount,
-    PointerObject as Pointer,
-)
-
-BUNQ_BASE = "https://public-api.sandbox.bunq.com/v1"
-SUGARDADDY = "sugardaddy@bunq.com"
-WRONG_PENALTY = 5.00
-CORRECT_REWARD = 10.00
-CATRICE_USER_ID = 3628850
+try:
+    from bunq_client import headers as bunq_headers, user_id as bunq_user_id, account_id as bunq_account_id
+    BUNQ_AVAILABLE = True
+except Exception as _bunq_err:
+    print(f"[warn] bunq_client failed to load: {_bunq_err} — /split-bill will skip payment requests")
+    bunq_headers = bunq_user_id = bunq_account_id = None
+    BUNQ_AVAILABLE = False
 
 app = FastAPI()
 
@@ -439,6 +433,100 @@ def get_leaderboard():
 @app.get("/transactions")
 def get_transactions():
     return {p.name: p.transactions for p in game.players}
+
+
+BUNQ_BASE = "https://public-api.sandbox.bunq.com/v1"
+
+PLAYER_EMAILS = {
+    "Marco": "test+marco@bunq.com",
+    "Sofia": "test+sofia@bunq.com",
+    "Jan": "test+jan@bunq.com",
+}
+
+
+class SplitBillRequest(BaseModel):
+    image_base64: str
+    instruction: str
+    media_type: str = "image/jpeg"
+
+
+@app.post("/split-bill")
+def split_bill(req: SplitBillRequest):
+    import imghdr
+    import base64
+    image_bytes = base64.b64decode(req.image_base64)
+    detected = imghdr.what(None, h=image_bytes)
+    media_type = f"image/{detected}" if detected else "image/jpeg"
+
+    response = claude_client.messages.create(
+        model="claude-sonnet-4-6",
+        max_tokens=1000,
+        messages=[{
+            "role": "user",
+            "content": [
+                {
+                    "type": "image",
+                    "source": {
+                        "type": "base64",
+                        "media_type": media_type,
+                        "data": req.image_base64,
+                    },
+                },
+                {
+                    "type": "text",
+                    "text": (
+                        f"Here is a receipt image and a splitting instruction from the user.\n"
+                        f"Instruction: {req.instruction}\n\n"
+                        "Extract all items and prices from the receipt.\n"
+                        "Then apply the splitting instruction to calculate exactly how much each person owes.\n"
+                        "The people available are: Marco, Sofia, Jan, Catrice (that's me, exclude me from requests).\n"
+                        'Reply ONLY in JSON format:\n'
+                        '{ "items": [{ "name": "str", "price": 0.0 }], '
+                        '"splits": [{ "person": "str", "amount": 0.0, "reason": "str" }] }'
+                    ),
+                },
+            ],
+        }]
+    )
+
+    raw = response.content[0].text.strip()
+    if raw.startswith("```"):
+        parts = raw.split("```")
+        raw = parts[1] if len(parts) > 1 else parts[0]
+        if raw.startswith("json"):
+            raw = raw[4:]
+    raw = raw.strip()
+
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=500, detail=f"Claude returned invalid JSON: {raw[:300]}")
+
+    requests_sent = False
+    if BUNQ_AVAILABLE:
+        for split in data.get("splits", []):
+            email = PLAYER_EMAILS.get(split["person"])
+            if not email:
+                continue
+            req_headers = {**bunq_headers, "X-Bunq-Client-Request-Id": str(uuid.uuid4())}
+            body = json.dumps({
+                "amount": {"value": f"{split['amount']:.2f}", "currency": "EUR"},
+                "counterparty_alias": {"type": "EMAIL", "value": email},
+                "description": split.get("reason", "Bill split"),
+            }).encode()
+            bunq_req = urllib.request.Request(
+                f"{BUNQ_BASE}/user/{bunq_user_id}/monetary-account/{bunq_account_id}/request-inquiry",
+                data=body,
+                headers=req_headers,
+                method="POST",
+            )
+            try:
+                urllib.request.urlopen(bunq_req)
+                requests_sent = True
+            except Exception:
+                pass
+
+    return {"items": data.get("items", []), "splits": data.get("splits", []), "requests_sent": requests_sent}
 
 
 @app.post("/reset")

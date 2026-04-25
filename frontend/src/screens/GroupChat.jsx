@@ -95,8 +95,11 @@ export default function GroupChat() {
       </div>
 
       <div className="gc-footer">
-        <button className="gc-play-btn" onClick={openBetModal}>
-          Play Transaction Roulette
+        <button className="gc-split-btn" onClick={() => navigate("/split")}>
+          🧾 Split Bill
+        </button>
+        <button className="gc-play-btn" onClick={() => navigate("/chat")}>
+          💸 Play Transaction Roulette
         </button>
         <div className="gc-input-row">
           <input className="gc-input" type="text" placeholder="Message" readOnly />

@@ -1,0 +1,266 @@
+.bs-screen {
+  min-height: 100svh;
+  background: #F2F2F7;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+}
+
+.bs-header {
+  background: #FFFFFF;
+  padding: 16px 20px 14px;
+  border-bottom: 0.5px solid #E5E5EA;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bs-back {
+  background: none;
+  border: none;
+  font-size: 32px;
+  color: #00D166;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px 2px;
+  flex-shrink: 0;
+}
+
+.bs-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1C1C1E;
+  letter-spacing: -0.3px;
+}
+
+.bs-body {
+  flex: 1;
+  padding: 20px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Upload area */
+
+.bs-upload {
+  background: #FFFFFF;
+  border: 2px dashed #C7C7CC;
+  border-radius: 20px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+  overflow: hidden;
+  padding: 24px;
+}
+
+.bs-upload:active {
+  border-color: #00D166;
+}
+
+.bs-upload--filled {
+  border-style: solid;
+  border-color: #00D166;
+  padding: 0;
+  min-height: 220px;
+}
+
+.bs-upload-icon {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.bs-upload-label {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1C1C1E;
+}
+
+.bs-upload-sub {
+  font-size: 13px;
+  color: #8E8E93;
+}
+
+.bs-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
+  max-height: 280px;
+}
+
+/* Instruction input */
+
+.bs-textarea {
+  background: #FFFFFF;
+  border: none;
+  border-radius: 16px;
+  padding: 14px 16px;
+  font-size: 15px;
+  color: #1C1C1E;
+  font-family: inherit;
+  resize: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  outline: none;
+  line-height: 1.5;
+}
+
+.bs-textarea::placeholder {
+  color: #C7C7CC;
+}
+
+/* Buttons */
+
+.bs-submit-btn {
+  width: 100%;
+  background: #00D166;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: -0.3px;
+  box-shadow: 0 4px 18px rgba(0, 209, 102, 0.35);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, opacity 0.1s ease;
+}
+
+.bs-submit-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+  box-shadow: none;
+}
+
+.bs-submit-btn:not(:disabled):active {
+  transform: scale(0.975);
+  box-shadow: 0 2px 8px rgba(0, 209, 102, 0.2);
+}
+
+.bs-secondary-btn {
+  width: 100%;
+  background: #FFFFFF;
+  color: #00D166;
+  border: 1.5px solid #00D166;
+  border-radius: 14px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.1s ease;
+}
+
+.bs-secondary-btn:active {
+  opacity: 0.7;
+}
+
+/* Error */
+
+.bs-error {
+  background: #FFF2F2;
+  border: 1px solid #FF3B30;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #FF3B30;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* Results */
+
+.bs-success {
+  background: #F0FFF7;
+  border: 1.5px solid #00D166;
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #00A350;
+  text-align: center;
+}
+
+.bs-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1C1C1E;
+  letter-spacing: -0.3px;
+  padding-left: 2px;
+}
+
+.bs-card {
+  background: #FFFFFF;
+  border-radius: 18px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.bs-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px;
+  border-bottom: 0.5px solid #F2F2F7;
+  gap: 12px;
+}
+
+.bs-item-row:last-child {
+  border-bottom: none;
+}
+
+.bs-item-name {
+  font-size: 15px;
+  color: #1C1C1E;
+  flex: 1;
+}
+
+.bs-item-price {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1C1C1E;
+  flex-shrink: 0;
+}
+
+.bs-split-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.bs-split-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bs-split-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1C1C1E;
+}
+
+.bs-split-amount {
+  font-size: 18px;
+  font-weight: 800;
+  color: #00D166;
+}
+
+.bs-split-reason {
+  font-size: 13px;
+  color: #8E8E93;
+  line-height: 1.4;
+}
