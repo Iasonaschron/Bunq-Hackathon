@@ -1,12 +1,29 @@
 import asyncio
 import random
 import threading
+import requests
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from state import game, Player, Clue, Round
 from stats import pick_interesting_transaction
 from clue_generator import generate_clue, generate_roast
+from bunq_client import user_id as BUNQ_USER_ID, account_id as BUNQ_ACCOUNT_ID, headers as BUNQ_HEADERS
+
+from bunq.sdk.model.generated.endpoint import (
+    PaymentApiObject as Payment,
+    RequestInquiryApiObject as RequestInquiry,
+)
+from bunq.sdk.model.generated.object_ import (
+    AmountObject as Amount,
+    PointerObject as Pointer,
+)
+
+BUNQ_BASE = "https://public-api.sandbox.bunq.com/v1"
+SUGARDADDY = "sugardaddy@bunq.com"
+WRONG_PENALTY = 5.00
+CORRECT_REWARD = 10.00
+CATRICE_USER_ID = 3628850
 
 app = FastAPI()
 
@@ -68,7 +85,45 @@ PLAYER_DEFS = [
     {"user_id": 1004, "account_id": 2004, "name": "Jan", "email": "test+jan@bunq.com"},
 ]
 
-BOT_NAMES = {"Catrice", "Marco", "Sofia", "Jan"}
+BOT_NAMES = {"Marco", "Sofia", "Jan"}
+
+
+def _bunq_get_balance() -> float:
+    url = f"{BUNQ_BASE}/user/{BUNQ_USER_ID}/monetary-account/{BUNQ_ACCOUNT_ID}"
+    r = requests.get(url, headers=BUNQ_HEADERS, timeout=8)
+    data = r.json()
+    return float(data["Response"][0]["MonetaryAccountBank"]["balance"]["value"])
+
+
+def _bunq_pay_sugardaddy(amount: float, description: str) -> dict:
+    try:
+        result = Payment.create(
+            amount=Amount(value=f"{amount:.2f}", currency="EUR"),
+            counterparty_alias=Pointer(type_="EMAIL", value=SUGARDADDY),
+            description=description,
+        )
+        payment_id = result.value
+        print(f"[bunq] payment €{amount:.2f} → sugardaddy: id={payment_id}")
+        return {"ok": True, "status": 200, "body": f"payment id {payment_id}"}
+    except Exception as e:
+        print(f"[bunq] payment failed: {e}")
+        return {"ok": False, "status": "exception", "body": str(e)[:500], "error": str(e)}
+
+
+def _bunq_request_from_sugardaddy(amount: float, description: str) -> dict:
+    try:
+        result = RequestInquiry.create(
+            amount_inquired=Amount(value=f"{amount:.2f}", currency="EUR"),
+            counterparty_alias=Pointer(type_="EMAIL", value=SUGARDADDY),
+            description=description,
+            allow_bunqme=False,
+        )
+        request_id = result.value
+        print(f"[bunq] request €{amount:.2f} ← sugardaddy: id={request_id}")
+        return {"ok": True, "status": 200, "body": f"request id {request_id}"}
+    except Exception as e:
+        print(f"[bunq] request failed: {e}")
+        return {"ok": False, "status": "exception", "body": str(e)[:500], "error": str(e)}
 
 
 class JoinRequest(BaseModel):
@@ -122,12 +177,20 @@ FALLBACK_CLUES = [
     "Someone has sent €850 to Kraken this month alone.",
 ]
 
-def _generate_clues_background():
+MAX_ROUNDS = 6
+
+def _generate_clues_background(generation: int):
     import traceback
-    print(f"[prepare] background thread started — {len(game.players)} players")
+    print(f"[prepare] background thread started (gen={generation}) — {len(game.players)} players")
     used = []
     fallback_idx = 0
-    for i in range(6):
+    for i in range(MAX_ROUNDS):
+        # Bail out if a /reset bumped the generation while we were running
+        if generation != game.generation:
+            print(f"[prepare] generation changed (was {generation}, now {game.generation}) — aborting")
+            return
+        if len(game.rounds) >= MAX_ROUNDS:
+            break
         scored = pick_interesting_transaction(game.players, used)
         if scored is None:
             print(f"[prepare] no more interesting transactions at round {i}")
@@ -141,6 +204,12 @@ def _generate_clues_background():
             traceback.print_exc()
             clue_text = FALLBACK_CLUES[fallback_idx % len(FALLBACK_CLUES)]
             fallback_idx += 1
+        # Re-check generation before appending (avoid leaking into a fresh game)
+        if generation != game.generation:
+            print(f"[prepare] generation changed during clue gen — discarding")
+            return
+        if len(game.rounds) >= MAX_ROUNDS:
+            break
         clue = Clue(text=clue_text, correct_player_id=correct_player.user_id)
         game.clues.append(clue)
         game.rounds.append(Round(clue=clue))
@@ -163,7 +232,7 @@ def prepare_game():
                 balance=100.0,
                 transactions=fake_transactions.get(pdef["name"], []),
             ))
-    t = threading.Thread(target=_generate_clues_background, daemon=True)
+    t = threading.Thread(target=_generate_clues_background, args=(game.generation,), daemon=True)
     t.start()
     return {"status": "preparing"}
 
@@ -205,7 +274,7 @@ def start_game():
                     transactions=fake_transactions.get(pdef["name"], []),
                 ))
         game.preparing = True
-        t = threading.Thread(target=_generate_clues_background, daemon=True)
+        t = threading.Thread(target=_generate_clues_background, args=(game.generation,), daemon=True)
         t.start()
     game.pot = len(game.players) * 10.0
     game.started = True
@@ -248,11 +317,69 @@ def submit_guess(req: GuessRequest):
         raise HTTPException(status_code=400, detail="Already guessed this round")
     game.rounds[round_idx].resolved = True
     game.current_round += 1
+
     return {
         "correct": result["correct"],
         "correct_player_id": game.rounds[round_idx].clue.correct_player_id,
         "points_earned": result["points"],
     }
+
+
+@app.post("/settle")
+def settle_game():
+    """Move real money on Catrice's bunq sandbox account based on her final result."""
+    if game.finished:
+        return {"already_settled": True, "euro_delta": 0}
+    if not game.players:
+        return {"euro_delta": 0}
+
+    catrice = next((p for p in game.players if p.user_id == CATRICE_USER_ID), None)
+    if catrice is None:
+        return {"euro_delta": 0}
+
+    bet = game.pot / len(game.players) if game.players else 10.0
+    top_score = max(p.score for p in game.players)
+    winners = [p for p in game.players if p.score == top_score]
+    winner_share = game.pot / len(winners)
+
+    if catrice.score == top_score:
+        delta = winner_share - bet
+    else:
+        delta = -bet
+
+    game.finished = True
+
+    bunq_result = {"ok": True, "status": "no-op"}
+    if delta > 0.005:
+        bunq_result = _bunq_request_from_sugardaddy(delta, "Roulette winnings")
+    elif delta < -0.005:
+        bunq_result = _bunq_pay_sugardaddy(abs(delta), "Roulette losses")
+
+    return {
+        "euro_delta": round(delta, 2),
+        "won": catrice.score == top_score,
+        "bunq": bunq_result,
+    }
+
+
+@app.get("/balance")
+def get_balance():
+    try:
+        return {"balance": _bunq_get_balance()}
+    except Exception as e:
+        print(f"[/balance] failed: {e}")
+        raise HTTPException(status_code=502, detail=f"Could not fetch balance: {e}")
+
+
+@app.get("/can-afford")
+def can_afford(amount: float = Query(...)):
+    try:
+        bal = _bunq_get_balance()
+        return {"can_afford": bal >= amount, "balance": bal}
+    except Exception as e:
+        # If bunq is unreachable, allow the user through rather than blocking the game
+        print(f"[/can-afford] balance fetch failed, allowing through: {e}")
+        return {"can_afford": True, "balance": 0.0, "error": str(e)}
 
 
 @app.get("/round-status")
@@ -316,6 +443,7 @@ def get_transactions():
 
 @app.post("/reset")
 def reset_game():
+    game.generation += 1  # invalidate any in-flight clue-generation thread
     game.players.clear()
     game.clues.clear()
     game.rounds.clear()

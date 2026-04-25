@@ -13,7 +13,9 @@
       "Bash(taskkill /F /IM python.exe)",
       "PowerShell(Stop-Process *)",
       "Bash(curl -s -X POST http://localhost:8000/reset)",
-      "Bash(curl -s -X POST http://localhost:8000/prepare)"
+      "Bash(curl -s -X POST http://localhost:8000/prepare)",
+      "Bash(python *)",
+      "Bash(npm run *)"
     ]
   }
 }

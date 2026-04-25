@@ -2,53 +2,34 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./Chat.css"
 
-const API = "http://localhost:8000"
-const ME = "Jchro"
+const ME = "Catrice"
 
 const MESSAGES = [
   { id: 1,  sender: "Marco",   text: "guys it's friday night what are we doing",   time: "21:04" },
   { id: 2,  sender: "Sofia",   text: "idk but I'm bored",                           time: "21:05" },
-  { id: 3,  sender: "Catrice", text: "let's do something stupid with our money",    time: "21:06" },
+  { id: 3,  sender: ME,        text: "let's do something stupid with our money",    time: "21:06" },
   { id: 4,  sender: "Jan",     text: "..like what",                                  time: "21:06" },
   { id: 5,  sender: "Marco",   text: "transaction roulette??? 👀",                  time: "21:07" },
   { id: 6,  sender: "Sofia",   text: "LMAOOO yes please",                           time: "21:07" },
-  { id: 7,  sender: "Catrice", text: "I am NOT losing money to Jan again",          time: "21:08" },
+  { id: 7,  sender: ME,        text: "I am NOT losing money to Jan again",          time: "21:08" },
   { id: 8,  sender: "Jan",     text: "skill issue",                                  time: "21:08" },
   { id: 9,  sender: ME,        text: "ok fine I'll start one, who's in",            time: "21:09" },
   { id: 10, sender: "Marco",   text: "IN",                                           time: "21:09" },
   { id: 11, sender: "Sofia",   text: "same",                                         time: "21:09" },
-  { id: 12, sender: "Catrice", text: "let's go 🎰",                                 time: "21:10" },
+  { id: 12, sender: ME,        text: "let's go 🎰",                                 time: "21:10" },
 ]
 
-const AVATARS = { Marco: "M", Sofia: "S", Catrice: "C", Jan: "J", Jchro: "J" }
-const COLORS  = { Marco: "#e8855a", Sofia: "#a78bfa", Catrice: "#34d399", Jan: "#60a5fa", Jchro: "#FF8C00" }
+const AVATARS = { Marco: "M", Sofia: "S", Catrice: "C", Jan: "J" }
+const COLORS  = { Marco: "#e8855a", Sofia: "#a78bfa", Catrice: "#00D166", Jan: "#60a5fa" }
 
 export default function Chat() {
   const [modalOpen, setModalOpen] = useState(false)
   const [bet, setBet] = useState(10)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
   const navigate = useNavigate()
 
-  async function confirmBet() {
-    setLoading(true)
-    setError(null)
-    try {
-      await fetch(`${API}/reset`, { method: "POST" })
-      const res = await fetch(`${API}/join`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: ME }),
-      })
-      if (!res.ok) throw new Error("Failed to join")
-      const player = await res.json()
-      setModalOpen(false)
-      navigate("/lobby", { state: { player, bet } })
-    } catch (e) {
-      setError("Could not connect to server")
-    } finally {
-      setLoading(false)
-    }
+  function confirmBet() {
+    setModalOpen(false)
+    navigate("/lobby", { state: { player: { name: ME }, bet } })
   }
 
   return (
@@ -101,9 +82,8 @@ export default function Chat() {
               className="sheet-slider"
             />
             <div className="sheet-labels"><span>€1</span><span>€10</span></div>
-            {error && <p style={{ color: "#f87171", fontSize: 13 }}>{error}</p>}
-            <button className="sheet-confirm" onClick={confirmBet} disabled={loading}>
-              {loading ? "Joining..." : "Start Game 🎰"}
+            <button className="sheet-confirm" onClick={confirmBet}>
+              Start Game 🎰
             </button>
           </div>
         </div>

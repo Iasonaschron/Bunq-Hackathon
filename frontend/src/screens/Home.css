@@ -1,9 +1,12 @@
 .home-screen {
   min-height: 100svh;
+  max-width: 390px;
+  margin: 0 auto;
   background: #F2F2F7;
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   padding-bottom: 72px;
+  position: relative;
 }
 
 .home-header {

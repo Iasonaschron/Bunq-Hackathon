@@ -6,18 +6,18 @@ const API = "http://localhost:8000"
 const TOTAL_ROUNDS = 6
 const TIMER_SECONDS = 10
 
+const ME = { name: "Catrice", player_id: 3628850 }
 const BOT_PLAYERS = [
-  { name: "Catrice", user_id: 3628850 },
-  { name: "Marco",   user_id: 1002 },
-  { name: "Sofia",   user_id: 1003 },
-  { name: "Jan",     user_id: 1004 },
+  { name: "Marco", user_id: 1002 },
+  { name: "Sofia", user_id: 1003 },
+  { name: "Jan",   user_id: 1004 },
 ]
-const COLORS = { Catrice: "#34d399", Marco: "#e8855a", Sofia: "#a78bfa", Jan: "#60a5fa", Jchro: "#FF8C00" }
+const COLORS = { Catrice: "#00D166", Marco: "#e8855a", Sofia: "#a78bfa", Jan: "#60a5fa" }
 
 export default function Game() {
-  const { state } = useLocation()
   const navigate = useNavigate()
-  const player = state?.player
+  const { state } = useLocation()
+  const fromLobby = !!state?.player
 
   const [round, setRound] = useState(0)
   const [clue, setClue] = useState(null)
@@ -32,22 +32,48 @@ export default function Game() {
   const [hasGuessed, setHasGuessed] = useState(false)
   const [selectedId, setSelectedId] = useState(null)
 
-  const guessable = [...BOT_PLAYERS, { name: player?.name ?? "Jchro", user_id: player?.player_id ?? 9999 }]
+  const guessable = [{ name: ME.name, user_id: ME.player_id }, ...BOT_PLAYERS]
 
+  const [ready, setReady] = useState(fromLobby)
+  const initRef = useRef(false)
   const timerRef = useRef(null)
   const pollRef = useRef(null)
   const guessedRef = useRef(false)
   const prevScoresRef = useRef({})
   const roundRef = useRef(0)
 
+  // Fallback init if user lands on /game directly (no Lobby flow)
+  useEffect(() => {
+    if (fromLobby || initRef.current) return
+    initRef.current = true
+    ;(async () => {
+      try {
+        await fetch(`${API}/reset`, { method: "POST" })
+        await fetch(`${API}/prepare`, { method: "POST" })
+        await fetch(`${API}/join`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: ME.name }),
+        })
+        await fetch(`${API}/start`, { method: "POST" })
+      } catch {}
+      setReady(true)
+    })()
+  }, [])
+
   useEffect(() => {
     roundRef.current = round
+    if (!ready) return
+    if (round >= TOTAL_ROUNDS) {
+      navigate("/results")
+      return
+    }
     startRound()
     return () => {
       clearInterval(timerRef.current)
       clearInterval(pollRef.current)
     }
-  }, [round])
+  }, [round, ready])
 
   async function startRound() {
     clearInterval(timerRef.current)
@@ -130,7 +156,7 @@ export default function Game() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            guesser_id: player?.player_id ?? 9999,
+            guesser_id: ME.player_id,
             guessed_player_id: -1,  // no guess = wrong
           }),
         })
@@ -184,7 +210,7 @@ export default function Game() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          guesser_id: player?.player_id ?? 9999,
+          guesser_id: ME.player_id,
           guessed_player_id: targetPlayer?.user_id ?? -1,
         }),
       })
@@ -257,9 +283,9 @@ export default function Game() {
           <p className="mid-lb-subtitle">After round {round + 1}</p>
           <div className="mid-lb-list">
             {midScores.map((s, i) => (
-              <div key={s.name} className={`mid-lb-row${s.name === (player?.name ?? "Jchro") ? " mid-lb-row--me" : ""}`}>
+              <div key={s.name} className={`mid-lb-row${s.name === ME.name ? " mid-lb-row--me" : ""}`}>
                 <span className="mid-lb-rank">#{i + 1}</span>
-                <span className="mid-lb-name">{s.name}{s.name === (player?.name ?? "Jchro") ? " (you)" : ""}</span>
+                <span className="mid-lb-name">{s.name}{s.name === ME.name ? " (you)" : ""}</span>
                 <div className="mid-lb-right">
                   <span className="mid-lb-score">{s.score}pts</span>
                   {scoreDeltas[s.name] > 0 && (

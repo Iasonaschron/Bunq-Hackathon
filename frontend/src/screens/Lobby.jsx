@@ -4,8 +4,9 @@ import "./Lobby.css"
 
 const API = "http://localhost:8000"
 
-const BOTS = ["Catrice", "Marco", "Sofia", "Jan"]
-const COLORS = { Marco: "#e8855a", Sofia: "#a78bfa", Catrice: "#34d399", Jan: "#60a5fa", Jchro: "#FF8C00" }
+const ME = "Catrice"
+const BOTS = ["Marco", "Sofia", "Jan"]
+const COLORS = { Marco: "#e8855a", Sofia: "#a78bfa", Catrice: "#00D166", Jan: "#60a5fa" }
 
 function randDelay(min, max) {
   return min + Math.random() * (max - min)
@@ -19,7 +20,7 @@ export default function Lobby() {
   const initDone = useRef(false)
 
   // Start with only the human player visible
-  const [joined, setJoined] = useState(["Jchro"])
+  const [joined, setJoined] = useState([ME])
   const [newlyJoined, setNewlyJoined] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -30,7 +31,7 @@ export default function Lobby() {
   useEffect(() => {
     if (initDone.current) return
     initDone.current = true
-    const name = state?.player?.name ?? "Jchro"
+    const name = state?.player?.name ?? ME
     fetch(`${API}/reset`, { method: "POST" })
       .then(() => fetch(`${API}/prepare`, { method: "POST" }))
       .then(() => fetch(`${API}/join`, {

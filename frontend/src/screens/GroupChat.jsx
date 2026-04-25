@@ -1,6 +1,9 @@
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import BottomNav from "../components/BottomNav"
 import "./GroupChat.css"
+
+const API = "http://localhost:8000"
 
 const MESSAGES = [
   { id: 1, sender: "Marco", text: "guys who booked the most expensive airbnb AGAIN 😭", time: "21:44" },
@@ -29,6 +32,35 @@ const AVATAR_LABELS = {
 
 export default function GroupChat() {
   const navigate = useNavigate()
+  const [modalOpen, setModalOpen] = useState(false)
+  const [bet, setBet] = useState(10)
+  const [checking, setChecking] = useState(false)
+  const [error, setError] = useState(null)
+
+  function openBetModal() {
+    setError(null)
+    setModalOpen(true)
+  }
+
+  async function confirmBet() {
+    setChecking(true)
+    setError(null)
+    try {
+      const r = await fetch(`${API}/can-afford?amount=${bet}`)
+      if (!r.ok) throw new Error("Could not check balance")
+      const d = await r.json()
+      if (!d.can_afford) {
+        setError(`Insufficient balance (€${d.balance.toFixed(2)} available)`)
+        return
+      }
+      setModalOpen(false)
+      navigate("/lobby", { state: { player: { name: "Catrice" }, bet } })
+    } catch (e) {
+      setError(e.message || "Could not check balance")
+    } finally {
+      setChecking(false)
+    }
+  }
 
   return (
     <div className="gc-screen">
@@ -63,7 +95,7 @@ export default function GroupChat() {
       </div>
 
       <div className="gc-footer">
-        <button className="gc-play-btn" onClick={() => navigate("/chat")}>
+        <button className="gc-play-btn" onClick={openBetModal}>
           💸 Play Transaction Roulette
         </button>
         <div className="gc-input-row">
@@ -71,6 +103,26 @@ export default function GroupChat() {
           <button className="gc-send-btn">↑</button>
         </div>
       </div>
+
+      {modalOpen && (
+        <div className="gc-sheet-backdrop" onClick={() => setModalOpen(false)}>
+          <div className="gc-sheet" onClick={(e) => e.stopPropagation()}>
+            <div className="gc-sheet-handle" />
+            <h2 className="gc-sheet-title">Start a Roulette game</h2>
+            <div className="gc-sheet-amount">€{bet}</div>
+            <input
+              type="range" min={1} max={10} value={bet}
+              onChange={(e) => setBet(Number(e.target.value))}
+              className="gc-sheet-slider"
+            />
+            <div className="gc-sheet-labels"><span>€1</span><span>€10</span></div>
+            {error && <p className="gc-error">{error}</p>}
+            <button className="gc-sheet-confirm" onClick={confirmBet} disabled={checking}>
+              {checking ? "Checking balance..." : "Start Game 🎰"}
+            </button>
+          </div>
+        </div>
+      )}
 
       <BottomNav />
     </div>

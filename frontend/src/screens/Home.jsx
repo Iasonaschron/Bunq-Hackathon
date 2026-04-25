@@ -30,15 +30,21 @@ export default function Home() {
   const [transactions, setTransactions] = useState(FALLBACK_TXS)
 
   useEffect(() => {
-    fetch("http://localhost:8000/transactions")
-      .then((r) => r.json())
-      .then((data) => {
-        setBalance(100.0)
-        if (data["Catrice"] && data["Catrice"].length > 0) {
-          setTransactions(data["Catrice"])
-        }
-      })
-      .catch(() => setBalance(false))
+    let cancelled = false
+    function refreshBalance() {
+      fetch("http://localhost:8000/balance")
+        .then((r) => r.ok ? r.json() : Promise.reject())
+        .then((data) => { if (!cancelled) setBalance(data.balance) })
+        .catch(() => { if (!cancelled) setBalance((b) => b ?? false) })
+    }
+    refreshBalance()
+    const interval = setInterval(refreshBalance, 4000)
+    window.addEventListener("focus", refreshBalance)
+    return () => {
+      cancelled = true
+      clearInterval(interval)
+      window.removeEventListener("focus", refreshBalance)
+    }
   }, [])
 
   return (
