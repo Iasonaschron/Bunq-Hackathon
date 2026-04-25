@@ -11,6 +11,14 @@ from stats import pick_interesting_transaction
 from clue_generator import generate_clue, generate_roast, client as claude_client
 import urllib.request
 
+try:
+    from bunq_client import headers as bunq_headers, user_id as bunq_user_id, account_id as bunq_account_id
+    BUNQ_AVAILABLE = True
+except Exception as _bunq_err:
+    print(f"[warn] bunq_client failed to load: {_bunq_err} — /split-bill will skip payment requests")
+    bunq_headers = bunq_user_id = bunq_account_id = None
+    BUNQ_AVAILABLE = False
+
 app = FastAPI()
 
 app.add_middleware(
@@ -334,6 +342,12 @@ class SplitBillRequest(BaseModel):
 
 @app.post("/split-bill")
 def split_bill(req: SplitBillRequest):
+    import imghdr
+    import base64
+    image_bytes = base64.b64decode(req.image_base64)
+    detected = imghdr.what(None, h=image_bytes)
+    media_type = f"image/{detected}" if detected else "image/jpeg"
+
     response = claude_client.messages.create(
         model="claude-sonnet-4-6",
         max_tokens=1000,
@@ -344,7 +358,7 @@ def split_bill(req: SplitBillRequest):
                     "type": "image",
                     "source": {
                         "type": "base64",
-                        "media_type": req.media_type,
+                        "media_type": media_type,
                         "data": req.image_base64,
                     },
                 },
@@ -378,30 +392,31 @@ def split_bill(req: SplitBillRequest):
     except json.JSONDecodeError:
         raise HTTPException(status_code=500, detail=f"Claude returned invalid JSON: {raw[:300]}")
 
-    from bunq_client import headers as bunq_headers, user_id as bunq_user_id, account_id as bunq_account_id
+    requests_sent = False
+    if BUNQ_AVAILABLE:
+        for split in data.get("splits", []):
+            email = PLAYER_EMAILS.get(split["person"])
+            if not email:
+                continue
+            req_headers = {**bunq_headers, "X-Bunq-Client-Request-Id": str(uuid.uuid4())}
+            body = json.dumps({
+                "amount": {"value": f"{split['amount']:.2f}", "currency": "EUR"},
+                "counterparty_alias": {"type": "EMAIL", "value": email},
+                "description": split.get("reason", "Bill split"),
+            }).encode()
+            bunq_req = urllib.request.Request(
+                f"{BUNQ_BASE}/user/{bunq_user_id}/monetary-account/{bunq_account_id}/request-inquiry",
+                data=body,
+                headers=req_headers,
+                method="POST",
+            )
+            try:
+                urllib.request.urlopen(bunq_req)
+                requests_sent = True
+            except Exception:
+                pass
 
-    for split in data.get("splits", []):
-        email = PLAYER_EMAILS.get(split["person"])
-        if not email:
-            continue
-        req_headers = {**bunq_headers, "X-Bunq-Client-Request-Id": str(uuid.uuid4())}
-        body = json.dumps({
-            "amount": {"value": f"{split['amount']:.2f}", "currency": "EUR"},
-            "counterparty_alias": {"type": "EMAIL", "value": email},
-            "description": split.get("reason", "Bill split"),
-        }).encode()
-        bunq_req = urllib.request.Request(
-            f"{BUNQ_BASE}/user/{bunq_user_id}/monetary-account/{bunq_account_id}/request-inquiry",
-            data=body,
-            headers=req_headers,
-            method="POST",
-        )
-        try:
-            urllib.request.urlopen(bunq_req)
-        except Exception:
-            pass
-
-    return {"items": data.get("items", []), "splits": data.get("splits", []), "requests_sent": True}
+    return {"items": data.get("items", []), "splits": data.get("splits", []), "requests_sent": requests_sent}
 
 
 @app.post("/reset")
